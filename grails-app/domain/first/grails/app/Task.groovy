@@ -1,17 +1,35 @@
 package first.grails.app
 
+import grails.databinding.BindingFormat
+
 class Task {
 
-    String summary
+    String title
     String details
     Date dateCreated
+    @BindingFormat('yyyy-MM-dd')
     Date deadline
     Long timeSpent = 0L
+    String status = "Open"
     static hasMany = [tags:Tag]
     static constraints = {
-        summary blank: false, unique: true
+        title blank: false, unique: true
+        status inList: ["Open", "Done"], nullable: true
         details blank: false, maxSize: 1000
         deadline nullable: true
         timeSpent min: 0L
+    }
+
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                ", title='" + title + '\'' +
+                ", details='" + details + '\'' +
+                ", dateCreated=" + dateCreated +
+                ", deadline=" + deadline +
+                ", timeSpent=" + timeSpent +
+                ", status='" + status + '\'' +
+                '}';
     }
 }
