@@ -25,7 +25,8 @@
 
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <button type="button" data-toggle="modal" data-target="#viewTaskDetails" data-title="${task.title}" id="${task.id}" onclick="viewMore(this)"
+                                    <button type="button" data-toggle="modal" data-target="#viewTaskDetails"
+                                            data-title="${task.title}" id="${task.id}" onclick="viewMore(this)"
                                             class="btn btn-sm btn-outline-secondary">View</button>
                                     %{--<button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>--}%
                                 </div>
@@ -63,13 +64,16 @@
             <!-- Modal body -->
             <div class="modal-body">
                 <h5 id="display-task-details"></h5><br>
+
                 <p id="display-creation-date"></p>
 
-            <p id="display-deadline"></p>
-            <p id="display-status"></p>
-            <div id="display-tags"></div>
+                <p id="display-deadline"></p>
 
-        </div>
+                <p id="display-status"></p>
+
+                <div id="display-tags"></div>
+
+            </div>
 
             <!-- Modal footer -->
             <div class="modal-footer">
@@ -83,32 +87,37 @@
 <script>
 
     function viewMore(elem) {
+        $("#display-tags").html('');
         var title = $(elem).data("title");
         $.ajax({
-            url: "/task/viewMore?title="+title,
+            url: "/task/viewMore?title=" + title,
             success: function (result) {
                 // console.log(result)
                 $("#display-task-title").text(result.title)
                 $("#display-task-details").text(result.details)
-                $("#display-creation-date").html("Created on: "+moment(new Date(result.dateCreated)).format("MMMM Do YYYY, h:mm:ss a"))
-                $("#display-deadline").text("Deadline: "+moment(new Date(result.deadline)).format("MMMM Do YYYY, h:mm:ss a"))
-                $("#display-status").text("Status: "+result.status)
+                $("#display-creation-date").html("Created on: " + moment(new Date(result.dateCreated)).format("MMMM Do YYYY, h:mm:ss a"))
+                $("#display-deadline").text("Deadline: " + moment(new Date(result.deadline)).format("MMMM Do YYYY, h:mm:ss a"))
+                $("#display-status").text("Status: " + result.status)
                 // result.getTags().forEach(e-)
-                for(var i = 0; i< result.tags.length; i++){
+
+                var tagList = ''
+                for (var i = 0; i < result.tags.length; i++) {
 
                     $.ajax({
-                        url: "/tag/findAllTags?id="+ result.tags[i].id,
+                        url: "/tag/findAllTags?id=" + result.tags[i].id,
                         success: function (res) {
                             // console.log(res)
-                            $("#display-tags")
-                                .html($("#display-tags")
-                                    .html()+"&nbsp;<span class='badge badge-primary'>"+res.tagName+"</span>");
-                            },
+
+                            tagList += "&nbsp;<span class='badge badge-primary'>" + res.tagName + "</span>"
+                            $("#display-tags").html(tagList);
+                        },
                         error: function (e) {
                             console.log(e)
                         }
                     });
                 }
+
+                tagList = ''
             },
             error: function (e) {
                 console.log(e);
