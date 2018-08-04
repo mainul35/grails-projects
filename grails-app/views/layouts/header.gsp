@@ -44,10 +44,11 @@
 
 
 
-<asset:javascript src="libs/bootstrap/js/jquery-3.3.1.slim.min.js"/>
+<asset:javascript src="libs/jquery.min.js"/>
 <asset:javascript src="libs/bootstrap/js/popper.min.js"/>
 <asset:javascript src="libs/jquery.dataTables.min.js"></asset:javascript>
 <asset:javascript src="libs/bootstrap/js/bootstrap.min.js"/>
+<asset:javascript src="libs/moment-with-locales.js"/>
 
 </body>
 </html>

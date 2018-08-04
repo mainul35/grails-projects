@@ -1,5 +1,6 @@
 package first.grails.app
 
+import grails.converters.JSON
 import org.springframework.http.HttpStatus
 
 class TaskController {
@@ -14,7 +15,7 @@ class TaskController {
     def addTask() {}
 
     def addTask_POST(Task task) {
-        println (task.toString());
+//        println (task.toString());
         if (task == null) {
             render status: HttpStatus.NOT_FOUND
             return
@@ -34,5 +35,10 @@ class TaskController {
             form multipartForm {redirect(controller: "task", action: "viewAllTasks") }
             '*' {respond task, status: HttpStatus.CREATED}
         }
+    }
+
+    def viewMore(String title) {
+//        println "@Line 40: viewMore called..."
+        render Task.findByTitle(title==null?"":title) == null?"Sorry, nothing to show!":Task.findByTitle(title) as JSON
     }
 }

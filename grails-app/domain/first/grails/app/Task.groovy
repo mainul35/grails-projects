@@ -1,7 +1,9 @@
 package first.grails.app
 
 import grails.databinding.BindingFormat
+import grails.rest.Resource
 
+//@Resource(uri = "/tasks", formats = ['json', 'xml'])
 class Task {
 
     String title
