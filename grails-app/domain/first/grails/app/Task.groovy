@@ -26,6 +26,7 @@ class Task {
     @Override
     public String toString() {
         return "Task{" +
+                "tags=" + tags +
                 ", title='" + title + '\'' +
                 ", details='" + details + '\'' +
                 ", dateCreated=" + dateCreated +

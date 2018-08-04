@@ -10,6 +10,7 @@
     %{--<asset:link rel="icon" href="favicon.ico" type="image/x-ico" />--}%
 
     <asset:stylesheet src="libs/bootstrap/css/bootstrap.min.css"/>
+    <asset:stylesheet src="libs/jquery_ui/jquery-ui.css"/>
 
     <g:layoutHead/>
 </head>
@@ -32,7 +33,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="/task/addTask">Add Task</a>
             </li>
-
+            <li class="nav-item">
+                <a class="nav-link" href="/tag/saveTagPage">Add Tag</a>
+            </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -49,6 +52,7 @@
 <asset:javascript src="libs/jquery.dataTables.min.js"></asset:javascript>
 <asset:javascript src="libs/bootstrap/js/bootstrap.min.js"/>
 <asset:javascript src="libs/moment-with-locales.js"/>
+<asset:javascript src="libs/jquery_ui/jquery-ui.js"/>
 
 </body>
 </html>

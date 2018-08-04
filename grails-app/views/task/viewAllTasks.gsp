@@ -67,7 +67,7 @@
 
             <p id="display-deadline"></p>
             <p id="display-status"></p>
-            <p id="display-tags"></p>
+            <div id="display-tags"></div>
 
         </div>
 
@@ -82,10 +82,6 @@
 
 <script>
 
-    // For JQuery datatable
-    // $(document).ready(function () {
-    //     $('#example').DataTable();
-    // });
     function viewMore(elem) {
         var title = $(elem).data("title");
         $.ajax({
@@ -94,9 +90,25 @@
                 // console.log(result)
                 $("#display-task-title").text(result.title)
                 $("#display-task-details").text(result.details)
-                $("#display-creation-date").html(moment(new Date(result.dateCreated)).format("MMMM Do YYYY, h:mm:ss a"))
-                $("#display-deadline").text(moment(new Date(result.deadline)).format("MMMM Do YYYY, h:mm:ss a"))
-                $("#display-status").text(result.status)
+                $("#display-creation-date").html("Created on: "+moment(new Date(result.dateCreated)).format("MMMM Do YYYY, h:mm:ss a"))
+                $("#display-deadline").text("Deadline: "+moment(new Date(result.deadline)).format("MMMM Do YYYY, h:mm:ss a"))
+                $("#display-status").text("Status: "+result.status)
+                // result.getTags().forEach(e-)
+                for(var i = 0; i< result.tags.length; i++){
+
+                    $.ajax({
+                        url: "/tag/findAllTags?id="+ result.tags[i].id,
+                        success: function (res) {
+                            // console.log(res)
+                            $("#display-tags")
+                                .html($("#display-tags")
+                                    .html()+"&nbsp;<span class='badge badge-primary'>"+res.tagName+"</span>");
+                            },
+                        error: function (e) {
+                            console.log(e)
+                        }
+                    });
+                }
             },
             error: function (e) {
                 console.log(e);

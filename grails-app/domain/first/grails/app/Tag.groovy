@@ -2,14 +2,18 @@ package first.grails.app
 
 class Tag {
 
-    String name
+    String tagName
     static hasMany = [tasks: Task]
     static belongsTo = Task
     static constraints = {
-        name blank: false, unique: true
+        tagName blank: false, unique: true
     }
 
-    String toString(){
-        return name
+    @Override
+    public String toString() {
+        return "Tag{" +
+                "id=" + id +
+                ", tagName='" + tagName + '\'' +
+                '}';
     }
 }

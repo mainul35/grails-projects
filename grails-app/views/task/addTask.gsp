@@ -23,6 +23,13 @@
                     </div>
                     <div class="form-group col-md-12">
                         <input type="date" class="form-control" placeholder="Deadline" name="deadline" id="deadline"/>
+                        %{--<input type="text" class="form-control" id="deadline"--}%
+                               %{--name="opening-date" placeholder="DD/MM/YYYY" required />--}%
+                    </div>
+                    <div class="form-group col-md-12">
+                        <g:select multiple="true" name="tags" from="${tags}" optionKey="id"
+                                  value="" optionValue="${{it.tagName}}"
+                                  noSelection="${['null':'Select Tag...']}"/>
                     </div>
                     <div class="form-group col-md-12">
                         <input type="submit" value="Save" class="btn btn-primary"/>
@@ -43,10 +50,13 @@
 
 <script>
 
-    // For JQuery datatable
-    // $(document).ready(function () {
-    //     $('#example').DataTable();
-    // });
+    // var dateToday = new Date();
+    // $(
+    //     "#deadline")
+    //     .datepicker({
+    //         minDate : dateToday,
+    //         dateFormat : "d/m/yy"
+    //     });
 </script>
 
 </body>

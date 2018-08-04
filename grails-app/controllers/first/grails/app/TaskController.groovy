@@ -4,6 +4,8 @@ import grails.converters.JSON
 import org.springframework.http.HttpStatus
 
 class TaskController {
+
+    TaskService taskService
     static scaffold = Task
 
     def viewAllTasks() {
@@ -12,10 +14,12 @@ class TaskController {
         [tasks: tasks, message: message]
     }
 
-    def addTask() {}
+    def addTask() {
+        def tags = Tag.findAll();
+        [tags: tags]
+    }
 
     def addTask_POST(Task task) {
-//        println (task.toString());
         if (task == null) {
             render status: HttpStatus.NOT_FOUND
             return
@@ -27,18 +31,17 @@ class TaskController {
             return
         }
 
-        task.setDateCreated(new  Date(System.currentTimeMillis()));
-        task.setStatus("Open")
-        task.save()
-        flush: true
+        taskService.saveTask(task)
+
+        def tags = Tag.findAll()
+        [message: "Task saved successfully.", tags: tags]
         request.withFormat {
-            form multipartForm {redirect(controller: "task", action: "viewAllTasks") }
-            '*' {respond task, status: HttpStatus.CREATED}
+            form multipartForm { redirect(controller: "task", action: "viewAllTasks") }
+            '*' { respond task, status: HttpStatus.CREATED }
         }
     }
 
     def viewMore(String title) {
-//        println "@Line 40: viewMore called..."
-        render Task.findByTitle(title==null?"":title) == null?"Sorry, nothing to show!":Task.findByTitle(title) as JSON
+        render Task.findByTitle(title == null ? "" : title) == null ? "Sorry, nothing to show!" : Task.findByTitle(title) as JSON
     }
 }
