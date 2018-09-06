@@ -1,13 +1,27 @@
 package grails.login.app
 
+import grails.core.GrailsApplication
+
 class BootStrap {
 
+    GrailsApplication grailsApplication
+    RequestMapService requestMapService
+
     def init = { servletContext ->
-        User user = new User()
-        user.name = 'Mainul Hasan'
-        user.email = 'mainul@bitmascot.com'
+        Admin user = new Admin()
+        user.name = 'Administrator'
+        user.email = 'admin@campus.com'
         user.password = 'secret'
-        user.save(failOnError: true, flush: true)
+        user.role = 'ROLE_ADMIN'
+        user.save(failOnError: true)
+
+        requestMapService.create('/admin/dashboard', user.role)
+
+        grailsApplication.controllerClasses.each {
+            it.	getActions().each {uri ->
+                println  "${it.logicalPropertyName}/${uri}"
+            }
+        }
     }
     def destroy = {
     }

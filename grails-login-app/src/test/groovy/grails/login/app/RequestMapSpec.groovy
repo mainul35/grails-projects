@@ -1,9 +1,9 @@
 package grails.login.app
 
-import grails.testing.web.taglib.TagLibUnitTest
+import grails.testing.gorm.DomainUnitTest
 import spock.lang.Specification
 
-class AppSecTagLibSpec extends Specification implements TagLibUnitTest<AppSecurityTagLib> {
+class RequestMapSpec extends Specification implements DomainUnitTest<RequestMap> {
 
     def setup() {
     }

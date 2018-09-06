@@ -1,18 +1,20 @@
 package grails.login.app
 
 class User {
-
+    Long id
     String email
     String password
-    String name = 'Anonymous'
+    String name
+    String role
 
-    Date created
-    Date updated
+    Date dateCreated
+    Date lastUpdated
 
     static constraints = {
-        email email: true, nullable: false, blank: false, unique: true
-        name blank: false, size: 2..30
-        password nullable: false, blank: false, size: 5..20
+        email shared: "nonEmpty", email: true, unique: true
+        name shared: "nonEmpty", size: 2..30
+        password shared: "nonEmpty", size: 5..20
+        role shared: "nonEmpty"
     }
     
     static mapping = {
@@ -27,4 +29,6 @@ class User {
     def beforeUpdate(){
         this.password = this.password.encodeAsBase64()
     }
+
+
 }

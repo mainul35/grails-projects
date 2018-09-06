@@ -1,27 +1,24 @@
 package grails.login.app
 
-class UserController {
+class AdminController {
 
-    UserService userService
     AuthService authService
+    StudentService studentService
+
     def dashboard() {
-        Admin admin = (Admin) authService.getAuthentication().user
-        log.info('dashboard(): admin = {}', admin)
-        if(admin.role.equals('ROLE_ADMIN')){
-                redirect(controller: "admin", action: "dashboard")
-                return
-        }else if(admin.role.equals('ROLE_STUDENT')){
-                redirect(controller: "student", action: "dashboard")
-                return
-        }
+        log.info('dashboard(): {}', authService.getAuthentication())
+        [user: authService.getAuthentication().user]
     }
 
-    def register(){
+    def 'create-semester'(){
+        render(view: 'createSemester')
+    }
 
+    def 'register-student'(){
         def msg = ''
         def status
         if(request.method == 'POST'){
-            def user = userService.create(params)
+            def user = studentService.create(params)
             log.info('register(): user={}', user)
             if(!user){
                 msg = 'Sorry, Failed to save!'
