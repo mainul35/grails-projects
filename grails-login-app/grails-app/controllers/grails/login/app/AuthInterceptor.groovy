@@ -1,12 +1,14 @@
 package grails.login.app
 
+import grails.core.GrailsApplication
 import grails.util.Holders
-
 
 class AuthInterceptor {
 
     AuthService authService
     RequestMapService requestMapService
+
+    GrailsApplication grailsApplication
 
     AuthInterceptor() {
         matchAll()
@@ -20,34 +22,45 @@ class AuthInterceptor {
             return false
         }
 
-//        if(request.getRequestURL().toString().contains('/user/dashboard') || request.getRequestURL().toString().equals(Holders.servletContext.contextPath)){
-//            redirect(uri: request.getRequestURL().toString()+'/user/dashboard')
-//            return true
-//        }
+        for (reqMap in RequestMap.findAll()) {
+            if (request.forwardURI.toString().equals('/')) {
+                continue
+            }
 
-        RequestMap.findAll().each { reqMap ->
-            println reqMap
+            def found = false
             if (request.forwardURI.toString().contains(reqMap.url)) {
-                if (!reqMap.role.toString().equals(authService.getAuthentication()?.user?.role.toString())) {
-                    println reqMap
+                if (reqMap.role
+                        .equals(authService.getAuthentication()?.user?.role)) {
+                    return true
+                } else {
                     render('403: Access denied!')
                     return true
                 }
-//                else{
-//                    if(authService.getAuthentication()?.user?.role.toString().equals('ROLE_ADMIN')){
-//                        redirect(controller: "admin", action: "dashboard")
-//                        return true
-//                    }else if(authService.getAuthentication()?.user?.role.toString().equals('ROLE_STUDENT')){
-//                        redirect(controller: "student", action: "dashboard")
-//                        return true
-//                    }
-//                }
             } else {
-                render('403: Access denied!')
-                return true
+
+                for (classes in grailsApplication.controllerClasses) {
+                    for (uri in classes.getActions()) {
+                        def path = ("/" + classes.logicalPropertyName + "/" + uri)
+                        if (path.contains(request.forwardURI.toString())) {
+                            if (!request.forwardURI.toString().equals(reqMap.url)) {
+                                found = true
+                                break
+                                break
+                            }
+                        } else {
+                            found = false
+                        }
+                    }
+                    if (found) {
+                        render('403: Access denied!')
+                        break
+                    }
+                }
+                if (!found)
+                    render('404: Not Found!')
             }
+            return true
         }
-//        redirect(uri: request.getRequestURL().toString()+'/user/dashboard')
         return true
     }
 
@@ -56,4 +69,5 @@ class AuthInterceptor {
     void afterView() {
         // no-op
     }
+
 }

@@ -11,7 +11,7 @@ class AdminController {
     }
 
     def 'create-semester'(){
-        render(view: 'createSemester')
+        render(view: 'create-semester')
     }
 
     def 'register-student'(){

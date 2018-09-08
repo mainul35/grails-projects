@@ -16,6 +16,7 @@ class BootStrap {
         user.save(failOnError: true)
 
         requestMapService.create('/admin/dashboard', user.role)
+        requestMapService.create('/admin/create-semester', user.role)
 
         grailsApplication.controllerClasses.each {
             it.	getActions().each {uri ->
