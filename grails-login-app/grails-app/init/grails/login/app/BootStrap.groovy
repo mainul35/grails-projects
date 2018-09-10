@@ -4,7 +4,7 @@ import grails.core.GrailsApplication
 
 class BootStrap {
 
-    GrailsApplication grailsApplication
+//    GrailsApplication grailsApplication
     RequestMapService requestMapService
 
     def init = { servletContext ->
@@ -18,11 +18,11 @@ class BootStrap {
         requestMapService.create('/admin/dashboard', user.role)
         requestMapService.create('/admin/create-semester', user.role)
 
-        grailsApplication.controllerClasses.each {
-            it.	getActions().each {uri ->
-                println  "${it.logicalPropertyName}/${uri}"
-            }
-        }
+//        grailsApplication.controllerClasses.each {
+//            it.	getActions().each {uri ->
+//                println  "${it.logicalPropertyName}/${uri}"
+//            }
+//        }
     }
     def destroy = {
     }

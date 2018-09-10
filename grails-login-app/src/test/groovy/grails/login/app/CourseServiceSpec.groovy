@@ -1,9 +1,9 @@
 package grails.login.app
 
-import grails.testing.web.taglib.TagLibUnitTest
+import grails.testing.services.ServiceUnitTest
 import spock.lang.Specification
 
-class AppSecTagLibSpec extends Specification implements TagLibUnitTest<AppTagLib> {
+class CourseServiceSpec extends Specification implements ServiceUnitTest<CourseService>{
 
     def setup() {
     }

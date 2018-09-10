@@ -9,7 +9,7 @@
 
 <body class="align-content-center">
 <div class="container">
-<g:render template="messaging"/>
+    <AppSecurity:msg msg="${msg}" status="${status}"></AppSecurity:msg>
     <h1>Register</h1>
     <div class="row">
         <g:form name="registration-form" controller="user" action="register" method="post">

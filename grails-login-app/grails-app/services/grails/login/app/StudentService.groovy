@@ -11,8 +11,13 @@ class StudentService {
         user.email = params.email
         user.password = params.password
 
+        if(user.validate()){
 //        user.save(flash:true)
-        log.info("create(): {}", user)
-        return user.save()
+            user.save()
+            log.info("create(): {}", user)
+            return true
+        }else{
+            return false
+        }
     }
 }

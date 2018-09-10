@@ -2,9 +2,9 @@ package grails.login.app
 
 class Semester {
 
-    Integer id
+    Long id
     String name
-    Integer duration
+    String duration
     static hasMany = [offeredCourses: Course]
 
     static constraints = {
@@ -14,6 +14,7 @@ class Semester {
 
     static mapping = {
         version false
+//        offeredCourses(cascade: 'all-delete-orphan')
     }
 
 }

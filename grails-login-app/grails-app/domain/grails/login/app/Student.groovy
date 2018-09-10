@@ -1,13 +1,13 @@
 package grails.login.app
 
 class Student extends User{
-
+    Long id
     String stdId
     String gender
     Date dateOfBirth
     String batch
-    Semester currentSemester
     String department
+    static belongsTo = [semester: Semester]
 
     static constraints = {
         name shared: "nonEmpty"

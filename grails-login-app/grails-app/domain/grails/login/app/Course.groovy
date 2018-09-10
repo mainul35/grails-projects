@@ -2,19 +2,19 @@ package grails.login.app
 
 class Course {
 
-    Integer id
+    Long id
     String name
     String code
-    Integer credits
-
+    String courseCredits
+    static belongsTo = [semester: Semester]
     static constraints = {
         name shared: "nonEmpty"
         code shared: "nonEmpty", unique: true
-        credits shared: "nonEmpty"
+        semester nullable: true
     }
 
     static mapping = {
         version false
-    }
 
+    }
 }

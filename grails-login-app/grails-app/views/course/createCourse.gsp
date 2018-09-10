@@ -6,15 +6,18 @@
     <title>Login</title>
     <meta name="layout" content="header"/>
 </head>
+
 <body class="align-content-center">
 <div class="container">
-    <AppSecurity:msg msg="${msg}" status="${status}"></AppSecurity:msg>
-    <h1>Log in</h1>
+    <h1>Create Course</h1>
+    <AppSecurity:msg msg="${msg}" status="${status}"/>
+
     <div class="row">
-        <g:form controller="auth" action="login" method="post">
-            <AppSecurity:emailPasswordFields></AppSecurity:emailPasswordFields>
+        <g:form controller="course" action="create-course">
+            <g:render template="form"/>
             <div class="form-group">
-                <g:submitButton type="submit" class="btn btn-primary" value="Login" name="submit"/>
+                <g:submitButton name="Create" class="btn btn-primary"/>&nbsp;
+                <g:link controller="course" action="view-all-courses" class="btn btn-success">View all</g:link>
             </div>
         </g:form>
     </div>

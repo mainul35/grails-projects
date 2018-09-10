@@ -11,10 +11,14 @@ class AdminController {
     }
 
     def 'create-semester'(){
-        render(view: 'create-semester')
+        render(view: '/semester/createSemester', model: [courses: Course.findAll()])
     }
 
-    def 'register-student'(){
+    def 'create-student'(){
+        render(view: 'createStudent', model: [semesters: Semester.findAll()])
+    }
+
+    def 'register-student'(Student student){
         def msg = ''
         def status
         if(request.method == 'POST'){
