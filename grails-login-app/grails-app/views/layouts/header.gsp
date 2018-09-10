@@ -29,11 +29,11 @@
             <li class="nav-item active">
                 <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
-            <AppSecurity:adminMenues></AppSecurity:adminMenues>
-            <AppSecurity:studentMenues></AppSecurity:studentMenues>
+            <App:adminMenues></App:adminMenues>
+            <App:studentMenues></App:studentMenues>
         </ul>
         <ul class="navbar-nav ml-auto">
-            <AppSecurity:menuOnAuthenticationState></AppSecurity:menuOnAuthenticationState>
+            <App:menuOnAuthenticationState></App:menuOnAuthenticationState>
         </ul>
     </div>
 </nav>

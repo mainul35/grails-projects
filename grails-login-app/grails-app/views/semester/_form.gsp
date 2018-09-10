@@ -16,3 +16,10 @@
               multiple="true"
               class="form-control"/>
 </div>
+
+<div class="form-group">
+    <label>Academic year</label>
+    <g:datePicker name="academicYear" class="form-control" placeholder="Academic Year" required="true"
+                  value="${new Date()}"
+                  precision="year" years="${1990..2018}"/>
+</div>

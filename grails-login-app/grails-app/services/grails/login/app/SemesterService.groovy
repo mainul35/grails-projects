@@ -19,8 +19,9 @@ class SemesterService {
     boolean updateSemester(GrailsParameterMap params) {
         def semester = getSemester(Long.parseLong(params.id))
         if (semester.validate()) {
-            semester.name = params.name
-            semester.duration = params.duration
+            semester.name = params?.name
+            semester.duration = params?.duration
+            semester.academicYear = params?.academicYear
             semester.offeredCourses.clear()
             semester.offeredCourses.addAll(courseService.getListMatchedWithId(params.offeredCourses))
             for (def course in semester.offeredCourses){
@@ -54,6 +55,14 @@ class SemesterService {
 
     def getAll(){
         return Semester.findAll()
+    }
+
+    Set<Semester> getListMatchedWithId(def ids) {
+        Set<Semester> semesters = new HashSet<>();
+        for(def id in ids){
+            semesters.add(getSemester(id))
+        }
+        return semesters
     }
 
 }

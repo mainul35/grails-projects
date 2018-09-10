@@ -9,7 +9,7 @@
 
 <body class="align-content-center">
 <div class="container">
-    <AppSecurity:msg status="${status}" msg="${msg}"/>
+    <App:msg status="${status}" msg="${msg}"/>
     <table class="table table-dark table-hover">
         <thead>
         <tr>

@@ -1,19 +1,18 @@
 package grails.login.app
 
 class Student extends User{
-    Long id
     String stdId
-    String gender
+    int gender
     Date dateOfBirth
-    String batch
-    String department
-    static belongsTo = [semester: Semester]
+    String profileImageName
+    static belongsTo = [semester: Semester, department: Department]
 
     static constraints = {
         name shared: "nonEmpty"
-        batch shared: "nonEmpty"
-        department shared: "nonEmpty"
         role shared: "nonEmpty"
+        semester nullable: true
+        department nullable: true
+        profileImageName nullable: true, blank: true
     }
 
     static mapping = {

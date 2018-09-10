@@ -11,7 +11,7 @@
 <div class="container">
 
     <h1>Update semester</h1>
-    <AppSecurity:msg msg="${msg}" status="${status}"/>
+    <App:msg msg="${msg}" status="${status}"/>
     <div class="row">
         <g:form controller="semester" action="update">
             <g:hiddenField name="id" value="${semester.id}"></g:hiddenField>

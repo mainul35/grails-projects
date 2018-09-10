@@ -11,7 +11,7 @@
 <div class="container">
 
     <h1>Create semester</h1>
-    <AppSecurity:msg msg="${msg}" status="${status}"/>
+    <App:msg msg="${msg}" status="${status}"/>
     <div class="row">
         <g:form controller="semester" action="create-semester">
             <g:hiddenField name="id" value="${System.currentTimeMillis()}"></g:hiddenField>

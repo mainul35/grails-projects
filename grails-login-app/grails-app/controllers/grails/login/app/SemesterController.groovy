@@ -15,6 +15,7 @@ class SemesterController {
         Semester semester = new Semester()
         semester.name = params?.name
         semester.duration = params?.duration
+        semester.academicYear = params?.academicYear
         Set<Course> courses = courseService.getListMatchedWithId(params?.offeredCourses)
 
         log.info('offered courses: {}', courses)

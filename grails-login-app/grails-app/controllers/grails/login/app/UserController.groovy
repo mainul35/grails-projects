@@ -5,12 +5,12 @@ class UserController {
     UserService userService
     AuthService authService
     def dashboard() {
-        Admin admin = (Admin) authService.getAuthentication().user
-        log.info('dashboard(): admin = {}', admin)
-        if(admin.role.equals('ROLE_ADMIN')){
+        User user = authService.getAuthentication().user
+        log.info('dashboard(): admin = {}', user)
+        if(user.role.equals('ROLE_ADMIN')){
                 redirect(controller: "admin", action: "dashboard")
                 return
-        }else if(admin.role.equals('ROLE_STUDENT')){
+        }else if(user.role.equals('ROLE_STUDENT')){
                 redirect(controller: "student", action: "dashboard")
                 return
         }

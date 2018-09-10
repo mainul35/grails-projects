@@ -1,23 +1,58 @@
 package grails.login.app
 
 import grails.gorm.transactions.Transactional
+import grails.web.servlet.mvc.GrailsParameterMap
 
 @Transactional
 class StudentService {
 
-    def create(params) {
-        Student user = new Student()
-        user.name = params.name
-        user.email = params.email
-        user.password = params.password
 
-        if(user.validate()){
-//        user.save(flash:true)
-            user.save()
-            log.info("create(): {}", user)
+    SemesterService semesterService
+    DepartmentService departmentService
+
+    def createStudent(Student student) {
+        log.info('createStudent(): {}', student)
+        if (student.save()) {
             return true
-        }else{
+        } else {
             return false
         }
     }
+
+    boolean updateStudent(GrailsParameterMap params) {
+        def student = getStudent(Long.parseLong(params.id))
+
+        student.properties =  params
+
+        if (student.validate()) {
+            log.info('updateStudent(): {}', student)
+            if (student.save(flush: true)) {
+                return true
+            } else {
+                return false
+            }
+        } else {
+            return false
+        }
+    }
+
+    def deleteStudent(Integer id) {
+        def student = getStudent(id)
+        try {
+            student.delete(flush: true)
+        } catch (Exception e) {
+            println(e.getMessage())
+            return false
+        }
+        return true
+    }
+
+    def getStudent(Serializable id) {
+        return Student.get(id)
+    }
+
+    def getAll() {
+        return Student.findAll()
+    }
+
 }

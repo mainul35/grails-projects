@@ -50,7 +50,7 @@ class CourseController {
             status = false
             msg = 'Course could not be updated'
         }
-        render(view: 'view-all-courses', model: [status: status, msg: msg, courses: Course.findAll()])
+        render(view: 'view-all-courses', model: [status: status, msg: msg, courses: courseService.getAll()])
     }
 
     def delete(Integer id){
@@ -65,7 +65,7 @@ class CourseController {
             status = false
             msg = 'Course could not be deleted'
         }
-        render(view: 'view-all-courses', model: [status: status, msg: msg, courses: Course.findAll()])
+        render(view: 'view-all-courses', model: [status: status, msg: msg, courses: courseService.getAll()])
     }
 
 }

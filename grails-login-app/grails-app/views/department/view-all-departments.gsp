@@ -13,24 +13,20 @@
     <table class="table table-dark table-hover">
         <thead>
         <tr>
-            <th>Course name</th>
-            <th>Course code</th>
-            <th>Credits</th>
+            <th>Department name</th>
             <th>Actions</th>
         </tr>
         </thead>
         <tbody>
-        <g:each var="course" in="${courses}">
+        <g:each var="department" in="${departments}">
             <tr>
-                <td>${course.name}</td>
-                <td>${course.code}</td>
-                <td>${course.courseCredits}</td>
+                <td>${department.name}</td>
                 <td>
                     <div class="btn-group">
-                        <g:link type="button" class="btn btn-primary" controller="course"
-                                action="edit" params="[id: course.id]">Edit</g:link>
-                        <g:link type="button" class="btn btn-danger" controller="course"
-                                action="delete" params="[id: course.id]">Delete</g:link>
+                        <g:link type="button" class="btn btn-primary" controller="department"
+                                action="edit" params="[id: department.id]">Edit</g:link>
+                        <g:link type="button" class="btn btn-danger" controller="department"
+                                action="delete" params="[id: department.id]">Delete</g:link>
                     </div>
                 </td>
             </tr>

@@ -9,23 +9,19 @@
 
 <body class="align-content-center">
 <div class="container">
-    <h1>Create Student</h1>
-    <App:msg msg="${msg}" status="${status}"/>
+    <h1>Edit Student</h1>
+    <App:msg status="${status}" msg="${msg}"/>
     <div class="row">
-        <g:uploadForm controller="admin" action="register-student" enctype='multipart/form-data'>
-            <g:hiddenField name="id" value="${System.currentTimeMillis()}"></g:hiddenField>
+        <g:uploadForm controller="student" action="update" enctype='multipart/form-data'>
+            <g:hiddenField name="id" value="${student?.id}"></g:hiddenField>
             <div class="form-group">
                 <label>Student ID</label>
-                <g:textField name="stdId" placeholder="Student Id" value="${student?.id}" class="form-control"
-                             required="true"></g:textField>
+                <g:textField name="stdId" placeholder="Student Id" value="${student.stdId}" class="form-control" required="true" disabled="true"></g:textField>
             </div>
-            <g:render template="name_sex_dob"/>
-            <App:emailPasswordFields email="${student?.email}" password="${student?.password}"/>
-            <g:render template="semester_department"/>
+            <App:editStudent email="${student.email}" password="${student.email}"/>
             <div class="form-group">
                 <input type="file" name="image"/>
             </div>
-
             <div class="form-group">
                 <g:submitButton name="submit" class="btn btn-primary"></g:submitButton>
             </div>
