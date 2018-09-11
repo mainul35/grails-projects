@@ -22,8 +22,8 @@ class AuthInterceptor {
             return false
         }
 
-        def reqMaps = RequestMap.findAll()
-
+//        def reqMaps = RequestMap.findAll()
+//
 //        for (reqMap in reqMaps) {
 //            if (request.forwardURI.toString().equals('/')) {
 //                continue

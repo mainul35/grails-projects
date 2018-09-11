@@ -100,6 +100,7 @@ environments:
         dataSource:
             dbCreate: update
             url: jdbc:mysql://localhost:3306/grails_login_app?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false
+        uploadFolder: file:///C:/temp/
     test:
         dataSource:
             dbCreate: update

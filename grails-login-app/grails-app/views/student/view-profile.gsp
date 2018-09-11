@@ -11,8 +11,9 @@
 <div class="container">
     <div class="row">
         <div class="col-2">
-            %{--<g:img uri="${grails.login.app.UploadService.FILE_PATH}${student.profileImageName}"/>--}%
-            <img src="${createLink(controller: 'image', action: 'getImage', imageName: student.profileImageName)}" />
+            <img src="${application.contextPath}${student.profileImageName}"/>
+            %{--<g:img dir="images" file="${student.profileImageName}"/>--}%
+            %{--<img src="${createLink(controller: 'image', action: 'getImage', imageName: student.profileImageName)}" />--}%
         </div>
         <div class="col-8">
             <p>Student ID: ${student.stdId}</p>

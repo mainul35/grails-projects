@@ -16,7 +16,8 @@ class UploadService {
 
         try {
             if (file && !file.empty) {
-                file.transferTo(new File("${FILE_PATH}${name}"))
+                log.info('upload(): grailsApplication.config.uploadFolder = {}', grailsApplication.config.uploadFolder)
+                file.transferTo(new File("${grailsApplication.config.uploadFolder}${name}"))
                 log.info('register-student(): {}', 'Image uploaded!')
             } else {
                 log.info('register-student(): {}', 'Image upload failed!')

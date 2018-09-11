@@ -15,7 +15,7 @@
         <tr>
             <th>Semester name</th>
             <th>Semester durations</th>
-            <th>Details</th>
+            %{--<th>Details</th>--}%
             <th>Actions</th>
         </tr>
         </thead>
@@ -24,9 +24,9 @@
             <tr>
                 <td>${semester.name}</td>
                 <td>${semester.duration}</td>
-                <td><g:link type="button" class="btn btn-primary" controller="semester"
-                            action="details" params="[id: semester.id]">Edit</g:link>
-                </td>
+                %{--<td><g:link type="button" class="btn btn-primary" controller="semester"--}%
+                            %{--action="details" params="[id: semester.id]">Edit</g:link>--}%
+                %{--</td>--}%
                 <td>
                     <div class="btn-group">
                         <g:link type="button" class="btn btn-primary" controller="semester"

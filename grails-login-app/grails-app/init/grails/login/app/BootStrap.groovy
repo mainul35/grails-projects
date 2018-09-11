@@ -1,11 +1,13 @@
 package grails.login.app
 
 import grails.core.GrailsApplication
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 
 class BootStrap {
 
 //    GrailsApplication grailsApplication
     RequestMapService requestMapService
+    ResourceHandlerRegistry registry
 
     def init = { servletContext ->
 //        Admin user = new Admin()
@@ -23,6 +25,9 @@ class BootStrap {
 //                println  "${it.logicalPropertyName}/${uri}"
 //            }
 //        }
+
+        registry.addResourceHandler("/temp/**")
+        .addResourceLocations("file:///C:/temp/")
     }
     def destroy = {
     }
