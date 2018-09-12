@@ -127,3 +127,14 @@ environments:
                 testOnReturn: false
                 jdbcInterceptors: ConnectionState
                 defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
+
+#spring:
+#    resources:
+#        chain:
+#            strategy:
+#                content:
+#                    paths: /**
+#                    enabled: true
+#
+#    mvc:
+#        static-path-pattern: /resources/**

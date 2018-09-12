@@ -17,7 +17,7 @@ class UploadService {
         try {
             if (file && !file.empty) {
                 log.info('upload(): grailsApplication.config.uploadFolder = {}', grailsApplication.config.uploadFolder)
-                file.transferTo(new File("${grailsApplication.config.uploadFolder}${name}"))
+                file.transferTo(new File("${FILE_PATH}${name}"))
                 log.info('register-student(): {}', 'Image uploaded!')
             } else {
                 log.info('register-student(): {}', 'Image upload failed!')
@@ -32,9 +32,9 @@ class UploadService {
         return new File()
     }
 
-    byte[] getImage(imageName) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream()
-        ImageIO.write(ImageIO.read(new File("${FILE_PATH}${imageName}")), "jpg", baos)
-        return baos.toByteArray()
-    }
+//    byte[] getImage(imageName) {
+//        ByteArrayOutputStream baos = new ByteArrayOutputStream()
+//        ImageIO.write(ImageIO.read(new File("${FILE_PATH}${imageName}")), "jpg", baos)
+//        return baos.toByteArray()
+//    }
 }

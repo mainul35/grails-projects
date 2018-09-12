@@ -11,9 +11,9 @@
 <div class="container">
     <div class="row">
         <div class="col-2">
-            <img src="${application.contextPath}${student.profileImageName}"/>
-            %{--<g:img dir="images" file="${student.profileImageName}"/>--}%
-            %{--<img src="${createLink(controller: 'image', action: 'getImage', imageName: student.profileImageName)}" />--}%
+            %{--<img src="/student/temp/${student.profileImageName}"/>--}%
+            %{--<g:img dir="images" file="${student.profileImageName }", imageName: student.profileImageName/>--}%
+            %{--<img src="<g:createLink(controller: 'file', action: 'getImage', params="[fileName: '${student.profileImageName}', boo: 'far']")/>" width="80" height="100" />--}%
         </div>
         <div class="col-8">
             <p>Student ID: ${student.stdId}</p>
