@@ -11,6 +11,7 @@ class Course {
         name shared: "nonEmpty"
         code shared: "nonEmpty", unique: true
         semester nullable: true
+        courseCredits shared: "nonEmpty"
     }
 
     static mapping = {

@@ -13,15 +13,23 @@
         <div class="col-2">
             %{--<img src="/student/temp/${student.profileImageName}"/>--}%
             %{--<g:img dir="images" file="${student.profileImageName }", imageName: student.profileImageName/>--}%
-            %{--<img src="<g:createLink(controller: 'file', action: 'getImage', params="[fileName: '${student.profileImageName}', boo: 'far']")/>" width="80" height="100" />--}%
+            <img src="${createLink(controller: 'file', action: 'getImage', params: "[fileName: '${student.profileImageName}']")}"
+                 width="80" height="100"/>
         </div>
+
         <div class="col-8">
             <p>Student ID: ${student.stdId}</p>
+
             <p>Name: ${student.name}</p>
+
             <p>Email : ${student.email}</p>
+
             <p>Gender: ${student.gender}</p>
+
             <p>Date of birth: ${student.dateOfBirth}</p>
+
             <p>Semester: ${student.semester.name}</p>
+
             <p>Department: ${student.department.name}</p>
         </div>
     </div>

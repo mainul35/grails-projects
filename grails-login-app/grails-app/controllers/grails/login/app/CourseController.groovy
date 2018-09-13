@@ -12,9 +12,7 @@ class CourseController {
     def 'create-course'() {
         def returnedResult
         Course course = new Course()
-        course.name = params.name
-        course.code = params.code
-        course.courseCredits = params.courseCredits
+        course.properties = params
         if (course.validate()) {
             returnedResult = courseService.createCourse(course)
             def status, msg

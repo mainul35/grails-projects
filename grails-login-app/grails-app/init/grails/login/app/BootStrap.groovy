@@ -39,16 +39,16 @@ class BootStrap {
 //        log.info("servletContext = {} {}", resolver, appContext)
 
 
-//        ResourceHandlerRegistry registry = new ResourceHandlerRegistry(appContext, servletContext)
-//
-//        registry.addResourceHandler(
-//                "/temp/**",
-//                "/admin/temp/**",
-//                "/student/temp/**"
-//        )
-//        .addResourceLocations(
-//                "file:///C:/temp/"
-//        )
+        ResourceHandlerRegistry registry = new ResourceHandlerRegistry(appContext, servletContext)
+
+        registry.addResourceHandler(
+                "/temp/**",
+                "/admin/temp/**",
+                "/student/temp/**"
+        )
+        .addResourceLocations(
+                "file:///C:/temp/"
+        )
 //
 //        registry.addResourceHandler("/webjars/**")
 //                .addResourceLocations("classpath:/META-INF/resources/webjars/")

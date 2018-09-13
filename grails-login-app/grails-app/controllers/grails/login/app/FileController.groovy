@@ -5,7 +5,7 @@ class FileController {
 
     def getImage() {
 
-        byte[] imageInBytes = new File(UploadService.FILE_PATH + params.fileName).bytes
+        byte[] imageInBytes = new File(grailsApplication.config.uploadFolder + params.fileName).bytes
 
         response.with {
             setHeader('Content-length', imageInBytes.length.toString())
@@ -15,7 +15,7 @@ class FileController {
         }
     }
 
-    def 'get-image'(){
-        g.resource(dir: grailsApplication.config.uploadFolder, file: params.imageName, absolute: true)
+    def 'files'(){
+        ApplicationHolder.getApplication().getParentContext().getResource("file/recsys").getFile();
     }
 }
