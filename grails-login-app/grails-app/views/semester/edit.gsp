@@ -13,11 +13,11 @@
             <div class="form-group">
                 <label>Current courses</label>
 
-                <p>
+                <ul>
                     <g:each var="course" in="${semester.offeredCourses}">
-                        &nbsp;${course.name},
+                        <li>&nbsp;${course.name}</li>
                     </g:each>
-                </p>
+                </ul>
             </div>
 
             <div class="form-group">

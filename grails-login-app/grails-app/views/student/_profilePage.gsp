@@ -2,7 +2,8 @@
     <div class="row">
         <div class="col-md-4">
             <div class="profile-img">
-                <g:img dir="images" file="${student?.profileImageName?:'download.png'}" class="profile-img" width="80" height="100"/>
+                <g:img dir="images" file="${student?.profileImageName ?: 'download.png'}" class="profile-img" width="80"
+                       height="100"/>
             </div>
         </div>
 
@@ -70,7 +71,8 @@
                 </div>
 
                 <div class="col-md-6">
-                    <p>${student.semester.name}</p>
+                <p><g:link controller="semester"
+                           action="details" params="[id: student.semester.id]">${student.semester.name}</p></g:link>
                 </div>
             </div>
         </div>

@@ -44,10 +44,10 @@ class AdminController {
                 def status, msg
                 if (returnedResult) {
                     status = true
-                    msg = 'student created'
+                    msg = g.message(code: 'student.created')
                 } else if (!returnedResult) {
                     status = false
-                    msg = 'student could not be created'
+                    msg = g.message(code: 'student.creation.failed')
                 }
                 flash.message = [info: msg, success: status]
                 redirect(controller: 'student', action: 'all')
@@ -90,10 +90,10 @@ class AdminController {
         if (returnedResult) {
             status = true
             authService.getAuthentication().user = userService.getUser(authService.getAuthentication().user.id)
-            msg = 'Admin profile updated'
+            msg = g.message(code: 'admin.profile.updated')
         } else if (!returnedResult) {
             status = false
-            msg = 'Admin profile could not be updated'
+            msg = g.message(code: 'admin.profile.update.failed')
         }
         flash.message = [info: msg, success: status]
         redirect(controller: 'admin', action: 'profile')
@@ -115,7 +115,7 @@ class AdminController {
         if (admin) {
             render(view: 'dashboard', model: [admin: admin])
         } else {
-            render('404: Not Found')
+            redirect(controller: 'auth', action: '404')
         }
     }
 }

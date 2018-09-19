@@ -60,4 +60,8 @@ class SemesterService {
         return semesters
     }
 
+    Set<Student> getStudentsBySemesterId(Serializable id){
+        Semester.findById(id).students
+    }
+
 }

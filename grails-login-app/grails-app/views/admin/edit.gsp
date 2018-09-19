@@ -11,12 +11,26 @@
 
             <App:editProfile email="${user.email}" password="" user="${user}"/>
             <div class="form-group">
-                <input type="file" name="image"/>
+                <input id="attachment" type="file" name="image" accept="image/*"/>
+                <span id="attachment-msg">Max file size is 5MB</span>
             </div>
 
             <div class="form-group">
-                <g:submitButton name="Update" class="btn btn-primary btn-lg"></g:submitButton>
+                <g:submitButton id="update-btn" name="Update" class="btn btn-primary btn-lg"></g:submitButton>
             </div>
         </g:uploadForm>
     </div>
 </div>
+<script type="text/javascript">
+    $('#attachment').bind('change', function () {
+        if(this.files[0].size > Math.ceil(5000000)){
+            $('#attachment-msg').css( 'color', 'red' );
+            $('#update-btn').prop( 'disabled', true );
+        }
+        else if(this.files[0].size < Math.ceil(5000000)){
+            $('#attachment-msg').css( 'color', 'white' );
+            $('#update-btn').prop( 'disabled', false );
+        }
+        $('#attachment-msg').text('This file size is: ' + Math.ceil(this.files[0].size / 1024) + " KB");
+    });
+</script>

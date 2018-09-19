@@ -20,20 +20,17 @@ class SemesterController {
             return
         }
         def returnedResult
-//        log.info('create(): {}', params)
         Semester semester = new Semester(params)
         if (semester.validate()) {
             returnedResult = semesterService.createSemester(semester)
             def status, msg
-//            log.info('create(): {}', returnedResult)
             if (returnedResult) {
                 status = true
-                msg = 'semester created'
+                msg = g.message(code: 'semester.created')
             } else if (!returnedResult) {
                 status = false
-                msg = 'semester could not be created'
+                msg = g.message(code: 'semester.not.created')
             }
-//            render(view: 'createSemester', model: [status: status, msg: msg, courses: courseService.all])
             flash.message = [info: msg, success: status]
             redirect(controller: 'semester', action: 'all')
             return
@@ -47,7 +44,6 @@ class SemesterController {
             redirect(controller: 'auth', action: '403')
             return
         }
-//        log.info('edit(): {}', id)
         [semester: semesterService.getSemester(id), courses: courseService.all]
     }
 
@@ -59,7 +55,6 @@ class SemesterController {
         def returnedResult
         returnedResult = semesterService.updateSemester(params)
         def status, msg
-//        log.info('update(): {}', returnedResult)
         if (returnedResult) {
             status = true
             msg = 'semester updated'
@@ -67,7 +62,6 @@ class SemesterController {
             status = false
             msg = 'semester could not be updated'
         }
-//        render(view: 'all', model: [status: status, msg: msg, semesters: semesterService.all])
         flash.message = [info: msg, success: status]
         redirect(controller: 'semester', action: 'all')
         return
@@ -79,9 +73,15 @@ class SemesterController {
             return
         }
         def returnedResult
-        returnedResult = semesterService.deleteSemester(id)
         def status, msg
-//        log.info('delete(): {}', returnedResult)
+        if(semesterService.getSemester(id).students.size()>0){
+            status = false
+            msg = 'Semester could not be deleted because it contains students.'
+            flash.message = [info: msg, success: status]
+            redirect(controller: 'department', action: 'all')
+            return
+        }
+        returnedResult = semesterService.deleteSemester(id)
         if (returnedResult) {
             status = true
             msg = 'semester deleted'
@@ -89,9 +89,18 @@ class SemesterController {
             status = false
             msg = 'semester could not be deleted'
         }
-//        render(view: 'all', model: [status: status, msg: msg, semesters: semesterService.all])
         flash.message = [info: msg, success: status]
         redirect(controller: 'semester', action: 'all')
         return
+    }
+
+    def details() {
+        try {
+            def semester = semesterService.getSemester(Long.parseLong(params.id))
+            render(view: 'details', model: [semester: semester])
+        } catch (Exception e){
+            redirect(controller: 'auth', action: '404')
+
+        }
     }
 }

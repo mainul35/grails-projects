@@ -1,17 +1,13 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
 
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>Login</title>
-    <meta name="layout" content="header"/>
-</head>
+<title>Create student</title>
+<meta name="layout" content="header"/>
 
-<body class="align-content-center">
-<div class="container">
-    <h1>Create Student</h1>
-    <App:msg msg="${msg}" status="${status}"/>
-    <div class="row">
+<div class="card">
+    <div class="card-header">
+        Create student
+    </div>
+
+    <div class="card-body">
         <g:uploadForm controller="admin" action="register" enctype='multipart/form-data'>
             <g:hiddenField name="id" value="${System.currentTimeMillis()}"></g:hiddenField>
             <div class="form-group">
@@ -23,7 +19,7 @@
             <App:emailPasswordFields email="${student?.email}" password="${student?.password}"/>
             <g:render template="semester_department"/>
             <div class="form-group">
-                <input type="file" name="image"/>
+                <input type="file" name="image" accept="image/*"/>
             </div>
 
             <div class="form-group">
@@ -33,5 +29,4 @@
 
     </div>
 </div>
-</body>
-</html>
+

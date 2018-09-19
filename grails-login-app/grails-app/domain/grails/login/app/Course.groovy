@@ -10,6 +10,7 @@ class Course {
     static constraints = {
         name shared: "nonEmpty"
         code shared: "nonEmpty", unique: true
+        courseCredits shared: "nonEmpty"
     }
 
     static mapping = {

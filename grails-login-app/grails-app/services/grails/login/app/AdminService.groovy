@@ -16,7 +16,6 @@ class AdminService {
         admin.properties = params
 
         if (admin.validate()) {
-//            log.info('updateAdmin(): {}', admin)
             if (admin.save(flush: true)) {
                 return true
             } else {

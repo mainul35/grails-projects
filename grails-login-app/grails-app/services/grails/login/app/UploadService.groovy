@@ -39,6 +39,7 @@ class UploadService {
             String extension = fileNameSplittedArr[fileNameSplittedArr.length - 1]
             String systemPath = userType + '/' + authService.getAuthentication().user.id + '/'
             realPath = assetResourceLocator.resourceSearchDirectories[0] + 'grails-app/assets/images/'
+            log.info('{}', realPath + systemPath)
             //grailsApplication.config.uploadFolder
             dir = new File(realPath + systemPath)
             if (!dir.exists()) {
@@ -50,7 +51,7 @@ class UploadService {
             writeToDisk(uploadedFile, dir)
             params.profileImageName = systemPath + fileName
         } else {
-            params.profileImageName = authService.getAuthentication().user.profileImageName
+            params.profileImageName = userService.getUser(Long.parseLong(params.id))?.profileImageName
         }
         return params.profileImageName
     }

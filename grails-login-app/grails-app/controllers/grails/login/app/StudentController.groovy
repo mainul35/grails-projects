@@ -1,7 +1,5 @@
 package grails.login.app
 
-import org.grails.io.support.Resource
-
 class StudentController {
 
     AuthService authService
@@ -21,7 +19,7 @@ class StudentController {
         if (student) {
             render(view: 'view-profile', model: [student: student])
         } else {
-            render('404: Not Found')
+            redirect(controller: 'auth', action: '404')
         }
     }
 
@@ -36,9 +34,14 @@ class StudentController {
             return
         }
 
+        if(authService.authentication.user.role.equals('ROLE_ADMIN')
+            && !studentService.getStudent(id)){
+            redirect(controller: 'auth', action: '404')
+            return
+        }
+
         if(authService.authentication.user.role.equals('ROLE_STUDENT')
-            && !studentService.getStudent(id)
-                ){
+                && !studentService.getStudent(id)){
             redirect(controller: 'auth', action: '403')
             return
         }
@@ -103,7 +106,6 @@ class StudentController {
         def returnedResult
         returnedResult = studentService.deleteStudent(id)
         def status, msg
-//        log.info('delete(): {}', returnedResult)
         if (returnedResult) {
             status = true
             msg = 'student deleted'
@@ -111,7 +113,6 @@ class StudentController {
             status = false
             msg = 'student could not be deleted'
         }
-//        render(view: 'all', model: [status: status, msg: msg, students: studentService.getAll()])
         flash.message = [info: msg, success: status]
         redirect(controller: 'student', action: 'all')
         return
@@ -135,7 +136,7 @@ class StudentController {
         if (student) {
             render(view: 'view-profile', model: [student: student])
         } else {
-            render('404: Not Found')
+            redirect(controller: 'auth', action: '404')
         }
     }
 }

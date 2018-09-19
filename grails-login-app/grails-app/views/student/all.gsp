@@ -7,9 +7,8 @@
     </div>
 
     <div class="card-body">
-        %{--<App:msg status="${status}" msg="${msg}"/>--}%
-        <table class="table table-dark table-hover">
-            <thead>
+        <table class="table">
+            <thead class="table-dark">
             <tr>
                 <th>Student name</th>
                 <th>Student email</th>
@@ -35,13 +34,14 @@
                         <td>Other</td>
                     </g:else>
                     <td>${student.department.name}</td>
-                    <td>${student.semester.name}</td>
+                    <td><g:link controller="semester"
+                                action="details" params="[id: student.semester.id]">${student.semester.name}</g:link></td>
                     <td>
                         <div class="btn-group">
                             <g:link type="button" class="btn btn-primary" controller="student"
-                                    action="edit" params="[id: student.id]">Edit</g:link>
+                                    action="edit" params="[id: student.id]"><span class="fa fa-pencil fa-lg"></span></g:link>
                             <g:link type="button" class="btn btn-danger" controller="student"
-                                    action="delete" params="[id: student.id]">Delete</g:link>
+                                    action="delete" params="[id: student.id]"><span class="fa fa-remove fa-lg"></span></g:link>
                         </div>
                     </td>
                 </tr>

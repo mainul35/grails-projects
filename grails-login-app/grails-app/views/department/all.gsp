@@ -7,8 +7,8 @@
     </div>
 
     <div class="card-body">
-        <table class="table table-dark table-hover">
-            <thead>
+        <table class="table ">
+            <thead class="table-dark">
             <tr>
                 <th class="sortable">Department name</th>
                 <th class="action-row">Actions</th>
@@ -21,9 +21,9 @@
                     <td>
                         <div class="btn-group">
                             <g:link type="button" class="btn btn-primary" controller="department"
-                                    action="edit" params="[id: department.id]">Edit</g:link>
+                                    action="edit" params="[id: department.id]"><span class="fa fa-pencil fa-lg"></span></g:link>
                             <g:link type="button" class="btn btn-danger" controller="department"
-                                    action="delete" params="[id: department.id]">Delete</g:link>
+                                    action="delete" params="[id: department.id]"><span class="fa fa-remove fa-lg"></span></g:link>
                         </div>
                     </td>
                 </tr>

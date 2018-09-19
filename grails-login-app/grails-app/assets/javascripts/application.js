@@ -16,4 +16,5 @@
 //= require gt.init
 //= require_tree .
 //= require_self
+//= require file_validator
 

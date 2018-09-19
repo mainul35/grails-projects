@@ -4,21 +4,26 @@
 </div>
 
 <div class="form-group">
+    <label>Course Credit</label>
+    <g:field type="text" name="courseCredits" id="course-credit" placeholder="Credit Hours" class="form-control" value="${course?.courseCredits}" required="true"/>
+    <span id="course-credit-msg"></span>
+</div>
+
+<div class="form-group">
     <label>Course Code</label>
     <g:textField name="code" placeholder="Course Code" class="form-control" value="${course?.code}" required="true"/>
 </div>
 
-<div class="form-group">
-    <label>Course Credit</label>
-    <g:field type="text" name="courseCredits" onkeyup="nonZero(this)" placeholder="Credit Hours" class="form-control" value="${course?.courseCredits}" required="true"/>
-</div>
+
 
 <script>
-    function nonZero(elem) {
-        if(elem.value == 0){
-            elem.style.style.borderColor = "red";
+    $('#course-credit').bind('change', function () {
+        if(this.value=='0'){
+            $('#course-credit-msg').text('Credit must not be 0')
+            $('#course-credit-msg').css('color','red')
         }else{
-            elem.style.style.borderColor = "red";
+            $('#course-credit-msg').text('')
+            $('#course-credit-msg').css('color','white')
         }
-    }
+    });
 </script>

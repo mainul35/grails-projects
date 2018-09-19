@@ -5,7 +5,7 @@ class CourseController {
     CourseService courseService
     AuthService authService
 
-    def index(){
+    def index() {
         redirect(controller: 'auth', action: '404')
     }
 
@@ -14,28 +14,44 @@ class CourseController {
     }
 
     def create() {
-        if(!authService.getAuthentication().user.role.toString().equals('ROLE_ADMIN')){
+        if (!authService.getAuthentication().user.role.toString().equals('ROLE_ADMIN')) {
             redirect(controller: 'auth', action: '403')
             return
         }
         def returnedResult
+        def status, msg
         Course course = new Course()
         course.name = params.name
         course.code = params.code
-        course.courseCredits = params.courseCredits
+        try{
+            if(params.courseCredits?.toString()?.equals('0')){
+                course.courseCredits = null
+                status = false
+                msg = g.message(code: 'course.credit.non.zero')
+                flash.message = [info: msg, success: status]
+            }else{
+                course.courseCredits = params?.courseCredits
+            }
+
+        }catch (Exception e){
+            e.printStackTrace()
+            course.courseCredits = null
+            status = false
+            msg = g.message(code: 'invalid.course.credit')
+            flash.message = [info: msg, success: status]
+        }
+
         if (course.validate()) {
             returnedResult = courseService.createCourse(course)
-            def status, msg
-//            log.info('create(): {}', returnedResult)
+
             if (returnedResult) {
                 status = true
-                msg = 'Course created'
+                msg = g.message(code: 'course.created')
             } else if (!returnedResult) {
                 status = false
-                msg = 'Course could not be created'
+                msg = g.message(code: 'course.creation.failed')
 
             }
-//            render(view: 'createCourse', model: [status: status, msg: msg])
             flash.message = [info: msg, success: status]
             redirect(controller: 'course', action: 'all')
             return
@@ -45,56 +61,50 @@ class CourseController {
     }
 
     def edit(Integer id) {
-        if(!authService.getAuthentication().user.role.toString().equals('ROLE_ADMIN')){
+        if (!authService.getAuthentication().user.role.toString().equals('ROLE_ADMIN')) {
             redirect(controller: 'auth', action: '403')
             return
         }
-//        log.info('edit(): {}', id)
         [course: courseService.getCourse(id)]
     }
 
     def update() {
-        if(!authService.getAuthentication().user.role.toString().equals('ROLE_ADMIN')){
+        if (!authService.getAuthentication().user.role.toString().equals('ROLE_ADMIN')) {
             redirect(controller: 'auth', action: '403')
             return
         }
         def returnedResult
         returnedResult = courseService.updateCourse(params)
         def status, msg
-//        log.info('update(): {}', returnedResult)
         if (returnedResult) {
             status = true
-            msg = 'Course updated'
+            msg = g.message(code: 'course.updated')
         } else if (!returnedResult) {
             status = false
-            msg = 'Course could not be updated'
+            msg = g.message(code: 'course.not.updated')
         }
-//        render(view: 'all', model: [status: status, msg: msg, courses: courseService.getAll()])
         flash.message = [info: msg, success: status]
         redirect(controller: 'course', action: 'all')
         return
     }
 
-    def delete(Integer id){
-        if(!authService.getAuthentication().user.role.toString().equals('ROLE_ADMIN')){
+    def delete(Integer id) {
+        if (!authService.getAuthentication().user.role.toString().equals('ROLE_ADMIN')) {
             redirect(controller: 'auth', action: '403')
             return
         }
         def returnedResult
         returnedResult = courseService.deleteCourse(id)
         def status, msg
-//        log.info('delete(): {}', returnedResult)
         if (returnedResult) {
             status = true
-            msg = 'Course deleted'
+            msg = g.message(code: 'course.deleted')
         } else if (!returnedResult) {
             status = false
-            msg = 'Course could not be deleted'
+            msg = g.message(code: 'course.not.deleted')
         }
-//        render(view: 'all', model: [status: status, msg: msg, courses: courseService.getAll()])
         flash.message = [info: msg, success: status]
         redirect(controller: 'course', action: 'all')
         return
     }
-
 }

@@ -12,6 +12,9 @@ class StudentService {
 
     def createStudent(Student student) {
         if (student.save()) {
+            student.semester.students = semesterService.getStudentsBySemesterId(student.semester.id)
+            student.semester.students.add(student)
+            student.semester.save(flush: true)
             return true
         } else {
             return false
@@ -22,7 +25,10 @@ class StudentService {
         def student = getStudent(Long.parseLong(params.id))
         student.properties =  params
         if (student.validate()) {
-            if (student.save(flush: true)) {
+            if (student.save()) {
+                student.semester.students = semesterService.getStudentsBySemesterId(student.semester.id)
+                student.semester.students.add(student)
+                student.semester.save(flush: true)
                 return true
             } else {
                 return false

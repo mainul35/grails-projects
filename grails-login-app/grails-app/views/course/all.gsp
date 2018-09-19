@@ -10,8 +10,8 @@
     <div class="card-body">
 
         %{--<App:msg status="${status}" msg="${msg}"/>--}%
-        <table class="table table-dark table-hover">
-            <thead>
+        <table class="table">
+            <thead class="table-dark">
             <tr>
                 <th class="sortable">Course name</th>
                 <th>Course code</th>
@@ -28,9 +28,9 @@
                     <td>
                         <div class="btn-group">
                             <g:link type="button" class="btn btn-primary" controller="course"
-                                    action="edit" params="[id: course.id]">Edit</g:link>
+                                    action="edit" params="[id: course.id]"><span class="fa fa-pencil fa-lg"></span></g:link>
                             <g:link type="button" class="btn btn-danger" controller="course"
-                                    action="delete" params="[id: course.id]">Delete</g:link>
+                                    action="delete" params="[id: course.id]"><span class="fa fa-remove fa-lg"></span></g:link>
                         </div>
                     </td>
                 </tr>
