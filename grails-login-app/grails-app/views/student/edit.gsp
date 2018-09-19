@@ -1,33 +1,45 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<meta name="layout" content="header"/>
 
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>Login</title>
-    <meta name="layout" content="header"/>
-</head>
+<div class="card">
+    <div class="card-header">
+        Edit Profile of ${user?.name}
+    </div>
 
-<body class="align-content-center">
-<div class="container">
-    <h1>Edit Student</h1>
-    <App:msg status="${status}" msg="${msg}"/>
-    <div class="row">
+    <div class="card-body">
         <g:uploadForm controller="student" action="update" enctype='multipart/form-data'>
-            <g:hiddenField name="id" value="${student?.id}"></g:hiddenField>
+            <g:hiddenField name="id" value="${user?.id}"></g:hiddenField>
             <div class="form-group">
                 <label>Student ID</label>
-                <g:textField name="stdId" placeholder="Student Id" value="${student.stdId}" class="form-control" required="true" disabled="true"></g:textField>
+                <g:textField name="stdId" placeholder="Student Id" value="${user?.stdId}"
+                             class="form-control" required="true" disabled="true"></g:textField>
             </div>
-            <App:editStudent email="${student.email}" password="${student.email}"/>
+            <App:editProfile email="${user?.email}" password="" id="${user.id}" user="${user}"/>
+
+            <App:authorized role="ROLE_ADMIN">
+                <g:render template="/student/semester_department"/>
+            </App:authorized>
             <div class="form-group">
-                <input type="file" name="image"/>
+                <input id="attachment" type="file" name="image"/>
+                <span id="attachment-msg">Max file size is 5MB</span>
             </div>
+
             <div class="form-group">
-                <g:submitButton name="submit" class="btn btn-primary"></g:submitButton>
+                <g:submitButton name="Update" id="update-btn" class="btn btn-primary btn-lg"></g:submitButton>
             </div>
         </g:uploadForm>
-
     </div>
 </div>
-</body>
-</html>
+
+<script type="text/javascript">
+    $('#attachment').bind('change', function () {
+        $('#attachment-msg').text('This file size is: ' + this.files[0].size / 1024 + "KB");
+
+        if(this.files[0].size>(5*1024*1024)){
+            $('#attachment-msg').css( 'color', 'red' );
+            $('#update-btn').prop( 'disabled', true );
+        }else{
+            $('#attachment-msg').css( 'color', 'white' );
+            $('#update-btn').prop( 'disabled', false );
+        }
+    });
+</script>

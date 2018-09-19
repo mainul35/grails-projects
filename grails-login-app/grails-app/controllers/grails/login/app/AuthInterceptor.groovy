@@ -13,14 +13,41 @@ class AuthInterceptor {
     AuthInterceptor() {
         matchAll()
                 .excludes(contrller: 'auth', action: 'login')
-                .excludes(contrller: 'user', action: 'register')
+                .excludes(contrller: 'user', action: 'register-student')
     }
 
     boolean before() {
+
         if (!authService.isAuthenticated()) {
             redirect(controller: "auth", action: "login")
             return false
         }
+
+//        boolean found = false
+//        def paths = []
+//        for (classes in grailsApplication.controllerClasses) {
+//            for (uri in classes.getActions()) {
+//                def path = ("/" + classes.logicalPropertyName + "/" + uri)
+//                paths.add(path)
+//            }
+//        }
+//        for (def path in paths){
+//            log.info("{} : {}", path, request.forwardURI.toString().contains(path))
+////            if (request.forwardURI.toString().equals('/')) {
+////                continue
+////            } else if (request.forwardURI.toString().equals(path)) {
+////                found = true
+////                break
+////                break
+////            }
+//        }
+//
+////        if(!found){
+////            redirect(controller: "auth", action: "404")
+////            return true
+////        }
+//
+
 
 //        def reqMaps = RequestMap.findAll()
 //

@@ -1,17 +1,12 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<title>Dashboard</title>
+<meta name="layout" content="header"/>
 
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>Login</title>
-    <meta name="layout" content="header"/>
-</head>
-<body class="align-content-center">
-<div class="container">
-    %{--<div class="row">--}%
-        %{----}%
-    %{--</div>--}%
-    <h1>Welcome, ${user?.name}</h1>
+
+<div class="card">
+    <div class="card-header">
+        Profile of ${admin?.name}
+    </div>
+    <div class="card-body">
+        <g:render template="profilePage"/>
+    </div>
 </div>
-</body>
-</html>

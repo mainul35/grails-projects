@@ -1,5 +1,7 @@
 package grails.login.app
 
+import org.grails.io.support.Resource
+
 class StudentController {
 
     AuthService authService
@@ -7,57 +9,101 @@ class StudentController {
     SemesterService semesterService
     DepartmentService departmentService
     UploadService uploadService
+    UserService userService
+
+    def index(){
+        redirect(controller: 'auth', action: '404')
+    }
 
     def dashboard() {
-        log.info('dashboard(): {}', authService.getAuthentication())
-        [user: authService.getAuthentication().user]
+        def id = params?.id ?: authService.authentication.user.id
+        def student = studentService.getStudent(id)
+        if (student) {
+            render(view: 'view-profile', model: [student: student])
+        } else {
+            render('404: Not Found')
+        }
     }
 
-    def 'view-all-students'() {
-        render(view: 'view-all-students', model: [students: studentService.getAll()])
+    def all() {
+        render(view: 'all', model: [students: studentService.getAll()])
     }
 
-    def 'edit'(Integer id) {
-        log.info('edit(): {}', id)
+    def edit(Integer id) {
+        if (!(authService.authentication.user.role.equals('ROLE_ADMIN')
+                || authService.authentication.user.role.equals('ROLE_STUDENT'))){
+            redirect(controller: 'auth', action: '403')
+            return
+        }
+
+        if(authService.authentication.user.role.equals('ROLE_STUDENT')
+            && !studentService.getStudent(id)
+                ){
+            redirect(controller: 'auth', action: '403')
+            return
+        }
+
+        if(authService.authentication.user.role.equals('ROLE_STUDENT') && !Integer.toString(id).equals(authService.authentication.user.id.toString())){
+            redirect(controller: 'auth', action: '403')
+            return
+        }
         [
-                student: studentService.getStudent(id),
-                semesters: semesterService.getAll(),
+                user    : studentService.getStudent(id),
+                semesters  : semesterService.getAll(),
                 departments: departmentService.getAll()
         ]
     }
 
-    def 'update'() {
-        def returnedResult
-        def uploadedFile
+    def update() {
 
-        if((params.image)){
-            uploadedFile = request.getFile('image')
-            def fileNameSplittedArr = uploadedFile.filename.split('\\.')
-            String extension = fileNameSplittedArr[fileNameSplittedArr.length-1]
-            String tempName = ''+System.currentTimeMillis()+'.'+extension
-            uploadService.upload(uploadedFile, tempName)
-            params.profileImageName = tempName
+        if (!(authService.authentication.user.role.equals('ROLE_ADMIN')
+                || authService.authentication.user.role.equals('ROLE_STUDENT'))){
+            redirect(controller: 'auth', action: '403')
+            return
+        }
+
+        if(authService.authentication.user.role.equals('ROLE_STUDENT')
+                && !studentService.getStudent(Long.parseLong(params.id))
+        ){
+            redirect(controller: 'auth', action: '403')
+            return
+        }
+
+        if(authService.authentication.user.role.equals('ROLE_STUDENT')
+                && !Long.toString(Long.parseLong(params.id)).equals(authService.authentication.user.id.toString())){
+            redirect(controller: 'auth', action: '403')
+            return
+        }
+        def status, msg
+        def returnedResult
+        if (params.image) {
+            params.profileImageName = uploadService.upload(request.getFile('image'), params)
         }
         returnedResult = studentService.updateStudent(params)
-        def status, msg
 
-
-        log.info('update(): {}', returnedResult)
         if (returnedResult) {
             status = true
+            authService.getAuthentication().user = userService.getUser(authService.getAuthentication().user.id)
             msg = 'student updated'
         } else if (!returnedResult) {
             status = false
             msg = 'student could not be updated'
         }
-        render(view: 'view-all-students', model: [status: status, msg: msg, students: studentService.getAll()])
+        flash.message = [info: msg, success: status]
+        flash.id = params.id
+        redirect(controller: 'student', action: 'profile')
+        return
     }
 
     def delete(Integer id) {
+        if (!authService.authentication.user.role.equals('ROLE_ADMIN')) {
+            redirect(controller: 'auth', action: '403')
+            return
+        }
         def returnedResult
         returnedResult = studentService.deleteStudent(id)
         def status, msg
-        log.info('delete(): {}', returnedResult)
+//        log.info('delete(): {}', returnedResult)
         if (returnedResult) {
             status = true
             msg = 'student deleted'
@@ -65,11 +111,31 @@ class StudentController {
             status = false
             msg = 'student could not be deleted'
         }
-        render(view: 'view-all-students', model: [status: status, msg: msg, students: studentService.getAll()])
+//        render(view: 'all', model: [status: status, msg: msg, students: studentService.getAll()])
+        flash.message = [info: msg, success: status]
+        redirect(controller: 'student', action: 'all')
+        return
     }
 
-    def 'profile'(){
-        def id = params.id
-        render(view: 'view-profile', model: [student: studentService.getStudent(id)])
+
+    def profile() {
+
+        def id = params?.id ?Long.parseLong(params?.id):
+                flash.id?Long.parseLong(flash.id):
+                        authService.authentication.user.id
+        if(authService.authentication.user.role.equals('ROLE_STUDENT')){
+            if (!studentService.getStudent(id) ||
+                    !id.toString().equals(authService.authentication.user.id.toString())) {
+                redirect(controller: 'auth', action: '403')
+                return
+            }
+        }
+
+        def student = studentService.getStudent(id)
+        if (student) {
+            render(view: 'view-profile', model: [student: student])
+        } else {
+            render('404: Not Found')
+        }
     }
 }

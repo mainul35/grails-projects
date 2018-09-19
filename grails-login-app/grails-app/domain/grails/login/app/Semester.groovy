@@ -11,6 +11,8 @@ class Semester {
     static constraints = {
         name shared: "nonEmpty"
         duration shared: "nonEmpty"
+        offeredCourses nullable: true
+        students nullable: true
     }
 
     static mapping = {

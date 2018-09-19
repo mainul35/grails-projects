@@ -4,34 +4,21 @@ class UserController {
 
     UserService userService
     AuthService authService
-    def dashboard() {
-        User user = authService.getAuthentication().user
-        log.info('dashboard(): admin = {}', user)
-        if(user.role.equals('ROLE_ADMIN')){
-                redirect(controller: "admin", action: "dashboard")
-                return
-        }else if(user.role.equals('ROLE_STUDENT')){
-                redirect(controller: "student", action: "dashboard")
-                return
-        }
+
+    def index(){
+        redirect(controller: 'auth', action: '404')
     }
 
-    def register(){
-
-        def msg = ''
-        def status
-        if(request.method == 'POST'){
-            def user = userService.create(params)
-            log.info('register(): user={}', user)
-            if(!user){
-                msg = 'Sorry, Failed to save!'
-                status = false
-                [msg: msg, status: status, user: user]
-            }else{
-                msg = 'Saved successfully!'
-                status = true
-                [msg: msg, status: status]
-            }
+    def dashboard() {
+        User user = authService.getAuthentication()?.user
+        if(user?.role?.equals('ROLE_ADMIN')){
+                flash.message = flash.message
+                redirect(controller: "admin", action: "dashboard")
+                return
+        }else if(user?.role?.equals('ROLE_STUDENT')){
+                flash.message = flash.message
+                redirect(controller: "student", action: "dashboard")
+                return
         }
     }
 }

@@ -8,8 +8,7 @@ class SemesterService {
     CourseService courseService
 
     def createSemester(Semester semester) {
-        log.info('createSemester(): {}', semester)
-        if (semester.save()) {
+        if (semester.save(flush: true)) {
             return true
         } else {
             return false
@@ -24,10 +23,6 @@ class SemesterService {
             semester.academicYear = params?.academicYear
             semester.offeredCourses.clear()
             semester.offeredCourses.addAll(courseService.getListMatchedWithId(params.offeredCourses))
-            for (def course in semester.offeredCourses){
-                course.semester = semester
-            }
-            log.info('updateSemester(): {}', semester)
             if (semester.save(flush: true)) {
                 return true
             } else {

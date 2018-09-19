@@ -12,23 +12,17 @@ import java.util.Scanner;
 public class TestMain {
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+//        Scanner scanner = new Scanner(System.in);
+//
+//        System.out.println("Product Base price");
+//        BigDecimal basePrice = new BigDecimal(scanner.nextLine());
+//        System.out.println("Product Quantity");
+//        int quantity = scanner.nextInt();
 
-        while (true) {
-            String val = scanner.nextLine();
-            String returningVal = "";
-            if (val.contains(".")) {
-                String[] valueArr = val.split("\\.");
+//        System.out.println(basePrice.multiply(new BigDecimal(quantity)).setScale(2, RoundingMode.HALF_UP));
 
-                if (Double.parseDouble("." + valueArr[1]) >= Double.parseDouble(".30") && Double.parseDouble("." + valueArr[1]) <= Double.parseDouble(".70")) {
-                    returningVal = valueArr[0] + ".50";
-                } else if (Double.parseDouble("." + valueArr[1]) >= Double.parseDouble(".00") && Double.parseDouble("." + valueArr[1]) < Double.parseDouble(".30")) {
-                    returningVal = valueArr[0] + ".00";
-                } else if (Double.parseDouble("." + valueArr[1]) > Double.parseDouble(".70") && Double.parseDouble("." + valueArr[1]) <= Double.parseDouble(".99")) {
-                    returningVal = Integer.toString(Integer.parseInt(valueArr[0]) + 1) + ".00";
-                }
-            }
-            System.out.println(Double.parseDouble(returningVal));
-        }
+        BigDecimal _6PercentOf10 =new BigDecimal(10).subtract((new BigDecimal(10).multiply(new BigDecimal(6))).divide(new BigDecimal(100)));
+
+        System.out.println(_6PercentOf10.toString());
     }
 }

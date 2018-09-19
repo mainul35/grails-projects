@@ -3,21 +3,31 @@ package grails.login.app
 class AuthController {
 
     AuthService authService
+
+    def index(){
+        redirect(controller: 'auth', action: '404')
+    }
+
     def login() {
-        log.info('login(): {}', params)
         if(params?.email && params?.password){
             if(authService.doLogin(params.email, params.password)){
+                flash.message = [info: 'Log in Successful!', success: true]
                 redirect(controller: 'user', action: 'dashboard')
                 return
             } else {
-                [msg: 'Log in failed!', status: false]
+                flash.message = [info: 'Log in Failed!', success: false]
             }
         }
     }
 
     def logout(){
         authService.logout()
-        redirect(controller: 'auth', action: 'login', model: [msg: 'Logged out successfully!', action: true])
+        flash.message = [info: 'Log out Successful!', success: true]
+        redirect(controller: 'auth', action: 'login')
         return
     }
+
+    def '403'(){}
+
+    def '404'(){}
 }

@@ -8,6 +8,10 @@ grails:
             # Whether to translate GORM events into Reactor events
             # Disabled by default for performance reasons
             events: false
+    guides:
+#        cdnFolder: ${assetResourceLocator.resourceSearchDirectories[0]}\grails-app\assets\images
+#        cdnFolder: C:\temp\static\images
+        cdnRootUrl: http://localhost:8888
 info:
     app:
         name: '@info.app.name@'
@@ -65,6 +69,9 @@ grails:
             maxsize: 1000
     controllers:
         defaultScope: singleton
+        upload:
+            maxFileSize: 5242880
+            maxRequestSize: 5242880
     converters:
         encoding: UTF-8
     views:
@@ -99,8 +106,16 @@ environments:
     development:
         dataSource:
             dbCreate: update
+#            dbCreate: create-drop
             url: jdbc:mysql://localhost:3306/grails_login_app?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false
-        uploadFolder: C:/temp/
+            logSql: true
+            formatSql: true
+        uploadFolder: ${assetResourceLocator.resourceSearchDirectories[0]}\grails-app\assets\images
+#        grails:
+#          assets:
+#            bundle: true #dont individually require files in development
+#            storagePath: C:/temp/ #automatically copy assets to external folder on startup
+#            mapping: assets
     test:
         dataSource:
             dbCreate: update
@@ -128,18 +143,5 @@ environments:
                 jdbcInterceptors: ConnectionState
                 defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
 
-#spring:
-#    resources:
-#        chain:
-#            strategy:
-#                content:
-#                    paths: /**
-#                    enabled: true
-#
-#    mvc:
-#        static-path-pattern: /resources/**
-
-grails:
-    resources:
-        adhoc:
-            patterns = ["/*", "*.css", "*.js"]
+server:
+    port: 8180

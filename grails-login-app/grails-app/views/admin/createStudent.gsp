@@ -1,17 +1,12 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<title>Create student</title>
+<meta name="layout" content="header"/>
 
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>Login</title>
-    <meta name="layout" content="header"/>
-</head>
+<div class="card">
+    <div class="card-header">
+        Create student
+    </div>
 
-<body class="align-content-center">
-<div class="container">
-    <h1>Create Student</h1>
-    <App:msg msg="${msg}" status="${status}"/>
-    <div class="row">
+    <div class="card-body">
         <g:uploadForm controller="admin" action="register-student" enctype='multipart/form-data'>
             <g:hiddenField name="id" value="${System.currentTimeMillis()}"></g:hiddenField>
             <div class="form-group">
@@ -30,8 +25,5 @@
                 <g:submitButton name="submit" class="btn btn-primary"></g:submitButton>
             </div>
         </g:uploadForm>
-
     </div>
 </div>
-</body>
-</html>

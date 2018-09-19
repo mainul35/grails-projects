@@ -7,7 +7,6 @@ import grails.web.servlet.mvc.GrailsParameterMap
 class DepartmentService {
 
     def createDepartment(Department department) {
-        log.info('createDepartment(): {}', department)
         if (department.save()) {
             return true
         } else {
@@ -19,8 +18,6 @@ class DepartmentService {
         def department = getDepartment(Long.parseLong(params.id))
         if (department.validate()) {
             department.name = params.name
-
-            log.info('updateDepartment(): {}', department)
             if (department.save(flush: true)) {
                 return true
             } else {

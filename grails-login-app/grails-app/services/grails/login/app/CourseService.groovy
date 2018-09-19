@@ -7,7 +7,6 @@ import grails.web.servlet.mvc.GrailsParameterMap
 class CourseService {
 
     def createCourse(Course course) {
-        log.info('createCourse(): {}', course)
         if (course.save()) {
             return true
         } else {
@@ -22,7 +21,6 @@ class CourseService {
             course.code = params.code
             course.courseCredits = params.courseCredits
 
-            log.info('updateCourse(): {}', course)
             if (course.save(flush: true)) {
                 return true
             } else {

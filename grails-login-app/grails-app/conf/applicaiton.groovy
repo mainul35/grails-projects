@@ -1,4 +1,9 @@
-grails.gorm.default.constraints = {
-    nonEmpty(nullable: false, blank: false)
+environments {
+    development {
+        grails {
+            assets{
+                storagePath= "C:/temp/"
+            }
+        }
+    }
 }
-

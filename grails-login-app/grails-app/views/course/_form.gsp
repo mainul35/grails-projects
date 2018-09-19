@@ -10,5 +10,15 @@
 
 <div class="form-group">
     <label>Course Credit</label>
-    <g:field type="text" name="courseCredits" placeholder="Credit Hours" class="form-control" value="${course?.courseCredits}" required="true"/>
+    <g:field type="text" name="courseCredits" onkeyup="nonZero(this)" placeholder="Credit Hours" class="form-control" value="${course?.courseCredits}" required="true"/>
 </div>
+
+<script>
+    function nonZero(elem) {
+        if(elem.value == 0){
+            elem.style.style.borderColor = "red";
+        }else{
+            elem.style.style.borderColor = "red";
+        }
+    }
+</script>

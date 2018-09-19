@@ -11,7 +11,6 @@ class StudentService {
     DepartmentService departmentService
 
     def createStudent(Student student) {
-        log.info('createStudent(): {}', student)
         if (student.save()) {
             return true
         } else {
@@ -21,11 +20,8 @@ class StudentService {
 
     boolean updateStudent(GrailsParameterMap params) {
         def student = getStudent(Long.parseLong(params.id))
-
         student.properties =  params
-
         if (student.validate()) {
-            log.info('updateStudent(): {}', student)
             if (student.save(flush: true)) {
                 return true
             } else {

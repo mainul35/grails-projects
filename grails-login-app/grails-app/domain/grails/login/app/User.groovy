@@ -6,15 +6,21 @@ class User {
     String password
     String name
     String role
+    Integer gender
+    Date dateOfBirth
+    String profileImageName
 
     Date dateCreated
     Date lastUpdated
 
     static constraints = {
         email shared: "nonEmpty", email: true, unique: true
-        name shared: "nonEmpty", size: 2..30
-        password shared: "nonEmpty", size: 5..20
+        name shared: "nonEmpty"
+        password shared: "nonEmpty"
         role shared: "nonEmpty"
+        profileImageName nullable: true, blank: true
+        dateOfBirth nullable: true
+        gender nullable: true
     }
     
     static mapping = {

@@ -4,10 +4,11 @@ class AppTagLib {
 
     AuthService authService
     UserService userService
+    StudentService studentService
     static namespace = "App"
 
     def menuOnAuthenticationState = { attrs, body ->
-        log.info('authenticated? = {}', authService.isAuthenticated())
+//        log.info('authenticated? = {}', authService.isAuthenticated())
         if (authService.isAuthenticated()) {
             out << '<li class="nav-item dropdown show">'
             out << g.link(class: "nav-link dropdown-toggle", "data-toggle": "dropdown") {
@@ -17,9 +18,9 @@ class AppTagLib {
             out << g.link(controller: "auth", action: "logout", class: "dropdown-item") { g.message(code: "logout") }
             out << "</div></li>"
         } else {
-            out << g.link(controller: "user", action: "register", class: "btn btn-primary") {
-                g.message(code: "signup")
-            }
+//            out << g.link(controller: "user", action: "register", class: "btn btn-primary") {
+//                g.message(code: "signup")
+//            }
         }
     }
 
@@ -31,8 +32,8 @@ class AppTagLib {
                 'Manage Courses'
             }
             out << '<div class="dropdown-menu">'
-            out << g.link(controller: "course", action: "create-course", class: "dropdown-item") { 'Create course' }
-            out << g.link(controller: "course", action: "view-all-courses", class: "dropdown-item") { 'View courses' }
+            out << g.link(controller: "course", action: "create", class: "dropdown-item") { 'Create course' }
+            out << g.link(controller: "course", action: "all", class: "dropdown-item") { 'View courses' }
             out << "</div></li>"
 
             out << '<li class="nav-item dropdown show">'
@@ -40,10 +41,10 @@ class AppTagLib {
                 'Manage Departments'
             }
             out << '<div class="dropdown-menu">'
-            out << g.link(controller: "department", action: "create-department", class: "dropdown-item") {
+            out << g.link(controller: "department", action: "create", class: "dropdown-item") {
                 'Create department'
             }
-            out << g.link(controller: "department", action: "view-all-departments", class: "dropdown-item") {
+            out << g.link(controller: "department", action: "all", class: "dropdown-item") {
                 'View departments'
             }
             out << "</div></li>"
@@ -53,10 +54,10 @@ class AppTagLib {
                 'Manage Semesters'
             }
             out << '<div class="dropdown-menu">'
-            out << g.link(controller: "semester", action: "create-semester", class: "dropdown-item") {
+            out << g.link(controller: "semester", action: "create", class: "dropdown-item") {
                 'Create semester'
             }
-            out << g.link(controller: "semester", action: "view-all-semesters", class: "dropdown-item") {
+            out << g.link(controller: "semester", action: "all", class: "dropdown-item") {
                 'View semesters'
             }
             out << "</div></li>"
@@ -69,39 +70,65 @@ class AppTagLib {
             out << g.link(controller: "admin", action: "register-student", class: "dropdown-item") {
                 'Register student'
             }
-            out << g.link(controller: "student", action: "view-all-students", class: "dropdown-item") {
+            out << g.link(controller: "student", action: "all", class: "dropdown-item") {
                 'View students'
             }
             out << "</div></li>"
         }
     }
 
-
-    def studentMenues = { attr, body ->
-        if (authService.isAuthenticated() && authService.getAuthentication().user.role.equals('ROLE_STUDENT')) {
-            out << '<li class="nav-item dropdown show">'
-            out << g.link(class: "nav-link dropdown-toggle", "data-toggle": "dropdown") {
-                'Profile'
+    def adminSideNav = { attrs, body ->
+        if (authService.isAuthenticated() && authService.getAuthentication().user.role.equals('ROLE_ADMIN')) {
+            out << '<nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">'
+            out << '<ul class="list-group">'
+            [
+                    [controller: "admin", action: "profile", name: "View profile"],
+                    [controller: "admin", action: "edit", name: "Edit Profle"],
+            ].each { menu ->
+                out << '<li class="list-group-item">'
+                out << g.link(controller: menu.controller, action: menu.action, params: [id: authService.getAuthentication().user.id]) {
+                    g.message(code: menu.name, args: [''])
+                }
+                out << '</li>'
             }
-            out << '<div class="dropdown-menu">'
-            out << g.link(controller: "student", action: "profile", params: [id: authService.getAuthentication().user.id], class: "dropdown-item") {
-                'View'
-            }
-            out << g.link(controller: "student", action: "edit", params: [id: authService.getAuthentication().user.id], class: "dropdown-item") {
-                'Edit'
-            }
-            out << "</div></li>"
+            out << '</ul></nav>'
+            out << body()
         }
     }
 
-    def editStudent = { attr, body ->
+    def studentSideNav = { attrs, body ->
+        if (authService.isAuthenticated() && authService.getAuthentication().user.role.equals('ROLE_STUDENT')) {
+            out << '<nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">'
+            out << '<ul class="list-group">'
+            [
+                    [controller: "student", action: "profile", name: "View profile"],
+                    [controller: "student", action: "edit", name: "Edit Profle"],
+            ].each { menu ->
+                out << '<li class="list-group-item">'
+                out << g.link(controller: menu.controller, action: menu.action, params: [id: authService.getAuthentication().user.id]) {
+                    g.message(code: menu.name, args: [''])
+                }
+                out << '</li>'
+            }
+            out << '</ul></nav>'
+            out << body()
+        }
+    }
+
+
+    def isAuthenticated = { attrs, body ->
+        if (authService.isAuthenticated().equals(Boolean.parseBoolean('' + attrs.authFlag))) {
+            out << body()
+        }
+    }
+
+    def editProfile = { attr, body ->
         if (authService.isAuthenticated()) {
             if (authService.getAuthentication().user.role.equals('ROLE_ADMIN')) {
-                out << g.render(template: '/admin/name_sex_dob')
+                out << g.render(template: '/admin/name_sex_dob', model: [user: attr.user])
                 out << emailPasswordFields(email: attr.email, password: attr.password)
-                out << g.render(template: '/admin/semester_department')
             } else if (authService.getAuthentication().user.role.equals('ROLE_STUDENT')) {
-                out << g.render(template: '/admin/name_sex_dob')
+                out << g.render(template: '/admin/name_sex_dob', model: [user: attr.user])
                 out << emailPasswordFields(email: attr.email, password: attr.password)
             }
         }
@@ -133,6 +160,26 @@ class AppTagLib {
             out << attr.msg
             out << '</strong>'
             out << '</div>'
+        }
+    }
+
+    def img = { attr, body ->
+        byte[] imageInBytes = new File(grailsApplication.config.uploadFolder + attr.src).bytes
+
+        if (imageInBytes) {
+            response.setContentLength(imageInBytes.length)
+            response.setContentType(attr.type)
+            response.outputStream.write(imageInBytes)
+        } else {
+            response.sendError(404)
+        }
+    }
+
+    def authorized = {attrs, body->
+        if(authService.isAuthenticated()){
+            if(authService.getAuthentication().user.role.equals(attrs.role)){
+                out << body()
+            }
         }
     }
 }

@@ -9,10 +9,10 @@
 
 <body class="align-content-center">
 <div class="container">
-    <App:msg msg="${msg}" status="${status}"></App:msg>
+    %{--<App:msg msg="${msg}" status="${status}"></App:msg>--}%
     <h1>Register</h1>
     <div class="row">
-        <g:form name="registration-form" controller="user" action="register" method="post">
+        <g:form name="registration-form" controller="user" action="register-student" method="post">
             <div class="form-group">
                 <label for="name">Name</label>
                 <g:textField name="name"  class="form-control" placeholder="Name" required="required" value="${user?.name}"></g:textField>

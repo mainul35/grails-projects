@@ -5,18 +5,31 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Login</title>
     <meta name="layout" content="header"/>
+    <link rel="stylesheet" href="${resource(file: 'login.css')}" type="text/css">
 </head>
+
 <body class="align-content-center">
-<div class="container">
-    <App:msg msg="${msg}" status="${status}"></App:msg>
-    <h1>Log in</h1>
-    <div class="row">
-        <g:form controller="auth" action="login" method="post">
-            <App:emailPasswordFields></App:emailPasswordFields>
-            <div class="form-group">
-                <g:submitButton type="submit" class="btn btn-primary" value="Login" name="submit"/>
+%{--<meta name="layout" content="public">--}%
+<div id="global-wrapper">
+    <div id="content-wrapper">
+        <div class="container">
+            %{--<App:msg msg="${msg}" status="${status}"></App:msg>--}%
+
+
+            <div class="col-sm-6 col-md-4 mx-auto">
+                <div class="account-wall">
+                    <g:img dir="images" file="download.png" class="profile-img"/>
+
+                    <g:form controller="auth" action="login" method="post" class="form-signin">
+                        <App:emailPasswordFields></App:emailPasswordFields>
+                        <div class="form-group">
+                            <g:submitButton type="submit" class="btn btn-lg btn-primary btn-block" value="Login"
+                                            name="submit"/>
+                        </div>
+                    </g:form>
+                </div>
             </div>
-        </g:form>
+        </div>
     </div>
 </div>
 </body>

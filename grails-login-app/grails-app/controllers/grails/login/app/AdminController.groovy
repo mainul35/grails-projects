@@ -7,51 +7,41 @@ class AdminController {
     SemesterService semesterService
     DepartmentService departmentService
     UploadService uploadService
+    AdminService adminService
+    def assetResourceLocator
+    UserService userService
+
+    def index(){
+        redirect(controller: 'auth', action: '404')
+    }
 
     def dashboard() {
-        log.info('dashboard(): {}', authService.getAuthentication())
-        [user: authService.getAuthentication().user]
+        if(!authService.getAuthentication().user.role.toString().equals('ROLE_ADMIN')){
+            redirect(controller: 'auth', action: '403')
+            return
+        }
+        [admin: authService.getAuthentication().user]
     }
 
-    def 'create-semester'() {
-        render(view: '/semester/createSemester', model: [courses: Course.findAll()])
-    }
 
     def 'register-student'() {
+        if(!authService.getAuthentication().user.role.toString().equals('ROLE_ADMIN')){
+            redirect(controller: 'auth', action: '403')
+            return
+        }
         if (!params) {
             render(view: 'createStudent')
             return
         } else {
             def returnedResult
-            //            uploadService.upload(file)
-
-            Student student = new Student()
-//            student.properties = params
-            student.name = params?.name
-            student.email = params?.email
-            student.password = params?.password
+            Student student = new Student(params)
             student.role = 'ROLE_STUDENT'
-            student.stdId = params?.stdId
-            student.gender = params?.gender ? params.gender.toInteger() : 0
-            student.dateOfBirth = params?.dateOfBirth
-            student.semester = semesterService.getSemester(params?.semester ? params?.semester.toInteger() : 0)
-            student.department = departmentService.getDepartment(params?.department ? params?.department.toInteger() : 0)
-
-
-            def uploadedFile
-            if ((params.image)) {
-                uploadedFile = request.getFile('image')
-                def fileNameSplittedArr = uploadedFile.filename.split('\\.')
-                String extension = fileNameSplittedArr[fileNameSplittedArr.length - 1]
-                String tempName = '' + System.currentTimeMillis() + '.' + extension
-                uploadService.upload(uploadedFile, tempName)
-                student.profileImageName = tempName
+            if (params.image) {
+                student.profileImageName = uploadService.upload(request.getFile('image'), params)
             }
-
             if (student.validate()) {
                 returnedResult = studentService.createStudent(student)
                 def status, msg
-                log.info('create-student(): {}', returnedResult)
                 if (returnedResult) {
                     status = true
                     msg = 'student created'
@@ -59,16 +49,10 @@ class AdminController {
                     status = false
                     msg = 'student could not be created'
                 }
-
-                render(view: 'createStudent',
-                        model: [
-                                status     : status,
-                                msg        : msg,
-                                semesters  : semesterService.getAll(),
-                                departments: departmentService.getAll()
-                        ]
-                )
+                flash.message = [info: msg, success: status]
+                redirect(controller: 'student', action: 'all')
             } else {
+
                 render(view: 'createStudent',
                         model: [
                                 semesters  : semesterService.getAll(),
@@ -76,6 +60,62 @@ class AdminController {
                         ]
                 )
             }
+        }
+    }
+
+    def edit(Integer id) {
+        if (!Integer.toString(id).equals(authService.authentication.user.id.toString())) {
+            redirect(controller: 'auth', action: '403')
+            return
+        }
+        [user: adminService.getAdmin(id)]
+    }
+
+    def update() {
+        if (authService.authentication.user.role.equals('ROLE_ADMIN')) {
+            if (!params.id.toString().equals(authService.authentication.user.id.toString())) {
+                redirect(controller: 'auth', action: '403')
+                return
+            }
+        } else {
+            redirect(controller: 'auth', action: '403')
+            return
+        }
+        def status, msg
+        def returnedResult
+        if (params.image) {
+            params.profileImageName = uploadService.upload(request.getFile('image'), params)
+        }
+        returnedResult = adminService.updateAdmin(params)
+        if (returnedResult) {
+            status = true
+            authService.getAuthentication().user = userService.getUser(authService.getAuthentication().user.id)
+            msg = 'Admin profile updated'
+        } else if (!returnedResult) {
+            status = false
+            msg = 'Admin profile could not be updated'
+        }
+        flash.message = [info: msg, success: status]
+        redirect(controller: 'admin', action: 'profile')
+        return
+    }
+
+    def profile() {
+        if(!authService.getAuthentication().user.role.toString().equals('ROLE_ADMIN')){
+            redirect(controller: 'auth', action: '403')
+            return
+        }
+        Long id = params.id ?Long.parseLong(params.id): authService.getAuthentication().user.id
+
+        if (!adminService.getAdmin(id) || !id.toString().equals(authService.authentication.user.id.toString())) {
+            redirect(controller: 'auth', action: '403')
+            return
+        }
+        def admin = adminService.getAdmin(id)
+        if (admin) {
+            render(view: 'dashboard', model: [admin: admin])
+        } else {
+            render('404: Not Found')
         }
     }
 }
