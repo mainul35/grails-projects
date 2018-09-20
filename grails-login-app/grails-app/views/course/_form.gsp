@@ -17,13 +17,5 @@
 
 
 <script>
-    $('#course-credit').bind('change', function () {
-        if(this.value=='0'){
-            $('#course-credit-msg').text('Credit must not be 0')
-            $('#course-credit-msg').css('color','red')
-        }else{
-            $('#course-credit-msg').text('')
-            $('#course-credit-msg').css('color','white')
-        }
-    });
+
 </script>

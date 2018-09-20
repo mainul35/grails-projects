@@ -4,6 +4,12 @@
 <div class="card">
     <div class="card-header">
         Create semester
+        <span class="float-right">
+            <div class="btn-group">
+                <g:link action="all" controller="semester" class="btn btn-success">All semesters</g:link>
+                <g:link action="statistics" controller="semester" class="btn btn-primary">View statistics</g:link>
+            </div>
+        </span>
     </div>
 
     <div class="card-body">

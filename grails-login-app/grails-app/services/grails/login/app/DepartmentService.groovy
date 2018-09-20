@@ -6,6 +6,8 @@ import grails.web.servlet.mvc.GrailsParameterMap
 @Transactional
 class DepartmentService {
 
+    GlobalConfigService globalConfigService
+
     def createDepartment(Department department) {
         if (department.save()) {
             return true
@@ -47,4 +49,16 @@ class DepartmentService {
         return Department.findAll()
     }
 
+    def list(GrailsParameterMap params) {
+        params.max = params.max ?: globalConfigService.itemsPerPage()
+        List<Department> departmentList = Department.createCriteria().list(params) {
+            if (params?.colName && params?.colValue) {
+                like(params.colName, "%" + params.colValue + "%")
+            }
+            if (!params.sort) {
+                order("id", "desc")
+            }
+        }
+        return [list: departmentList, count: Course.count()]
+    }
 }

@@ -4,9 +4,11 @@
               from="${semesters}"
               noSelection="${['null': 'Select Semester...']}"
               optionValue="name"
-              value="${user?.semester?.id}"
+              value="${user?.semester}"
               optionKey="id"
+                id="semester-opt"
               class="form-control"/>
+    <span id='semester-span'></span>
 </div>
 
 <div class="form-group">
@@ -16,7 +18,9 @@
               from="${departments}"
               noSelection="${['null': 'Select Department...']}"
               optionValue="name"
-              value="${user?.department?.id}"
+              value="${user?.department}"
               optionKey="id"
+        id="dept-opt"
               class="form-control"/>
+    <span id='dept-span'></span>
 </div>

@@ -2,6 +2,7 @@ package grails.login.app
 
 class DepartmentController {
 
+
     DepartmentService departmentService
     AuthService authService
 
@@ -36,6 +37,9 @@ class DepartmentController {
             redirect(controller: 'department', action: 'all')
             return
         } else {
+            if(params.name){
+                flash.message = [info: 'Could not save. Perhaps, same department already exists.', success: false]
+            }
             render(view: 'createDepartment')
         }
     }
@@ -95,4 +99,21 @@ class DepartmentController {
         return
     }
 
+    def details() {
+        try {
+            def department = departmentService.getDepartment(Long.parseLong(params.id))
+            if(!department){
+                redirect(controller: 'auth', action: '404')
+                return
+            }
+            render(view: 'details', model: [department: department])
+        } catch (Exception e){
+            redirect(controller: 'auth', action: '404')
+        }
+    }
+
+    def find() {
+        def response = departmentService.list(params)
+        render(view: 'all', model: [departments: response.list, total:response.count])
+    }
 }

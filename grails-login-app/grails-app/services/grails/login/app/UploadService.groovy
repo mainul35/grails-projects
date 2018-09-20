@@ -51,7 +51,12 @@ class UploadService {
             writeToDisk(uploadedFile, dir)
             params.profileImageName = systemPath + fileName
         } else {
-            params.profileImageName = userService.getUser(Long.parseLong(params.id))?.profileImageName
+            try{
+                params.profileImageName = userService.getUser(Long.parseLong(params.id)).profileImageName
+            }catch (NumberFormatException nfe){
+                nfe.printStackTrace()
+                params.profileImageName = null
+            }
         }
         return params.profileImageName
     }

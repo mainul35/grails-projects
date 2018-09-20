@@ -1,6 +1,7 @@
 <div class="form-group">
     <label>Student Name</label>
     <g:textField name="name"  value="${user?.name}" placeholder="Name" class="form-control" required="true"></g:textField>
+    <App:renderErrorMessage fieldName="name" model="${user}" errorMessage="please.enter.first.name"/>
 </div>
 <div class="form-group">
     <label>Sex</label><br/>

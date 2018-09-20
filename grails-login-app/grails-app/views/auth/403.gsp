@@ -14,7 +14,7 @@
 
     <div class="flex">
         <div>
-            <h1>403 FORBIDDEN</h1>
+            <h1>403 UNAUTHORIZED</h1>
             The server understood the request but refuses to authorize it.
             <hr>
             If authentication credentials were provided in the request, the server considers them insufficient to grant access. The client SHOULD NOT automatically repeat the request with the same credentials. The client MAY repeat the request with new or different credentials. However, a request might be forbidden for reasons unrelated to the credentials.

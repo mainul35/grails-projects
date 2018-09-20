@@ -11,12 +11,12 @@ class AdminController {
     def assetResourceLocator
     UserService userService
 
-    def index(){
+    def index() {
         redirect(controller: 'auth', action: '404')
     }
 
     def dashboard() {
-        if(!authService.getAuthentication().user.role.toString().equals('ROLE_ADMIN')){
+        if (!authService.getAuthentication().user.role.toString().equals('ROLE_ADMIN')) {
             redirect(controller: 'auth', action: '403')
             return
         }
@@ -25,7 +25,7 @@ class AdminController {
 
 
     def 'register-student'() {
-        if(!authService.getAuthentication().user.role.toString().equals('ROLE_ADMIN')){
+        if (!authService.getAuthentication()?.user?.role?.toString()?.equals('ROLE_ADMIN')) {
             redirect(controller: 'auth', action: '403')
             return
         }
@@ -51,15 +51,26 @@ class AdminController {
                 }
                 flash.message = [info: msg, success: status]
                 redirect(controller: 'student', action: 'all')
-            } else {
-
+                return
+            } else if (params.size()<4) {
+                flash.message = [info: 'Form was not filled up properly.', success: false]
                 render(view: 'createStudent',
                         model: [
+                                user       : params,
+                                semesters  : semesterService.getAll(),
+                                departments: departmentService.getAll()
+                        ]
+                )
+            }else {
+                render(view: 'createStudent',
+                        model: [
+                                user       : params,
                                 semesters  : semesterService.getAll(),
                                 departments: departmentService.getAll()
                         ]
                 )
             }
+
         }
     }
 
@@ -101,11 +112,11 @@ class AdminController {
     }
 
     def profile() {
-        if(!authService.getAuthentication().user.role.toString().equals('ROLE_ADMIN')){
+        if (!authService.getAuthentication().user.role.toString().equals('ROLE_ADMIN')) {
             redirect(controller: 'auth', action: '403')
             return
         }
-        Long id = params.id ?Long.parseLong(params.id): authService.getAuthentication().user.id
+        Long id = params.id ? Long.parseLong(params.id) : authService.getAuthentication().user.id
 
         if (!adminService.getAdmin(id) || !id.toString().equals(authService.authentication.user.id.toString())) {
             redirect(controller: 'auth', action: '403')

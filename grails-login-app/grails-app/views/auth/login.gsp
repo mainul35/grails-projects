@@ -21,7 +21,8 @@
                     <g:img dir="images" file="download.png" class="profile-img"/>
 
                     <g:form controller="auth" action="login" method="post" class="form-signin">
-                        <App:emailPasswordFields></App:emailPasswordFields>
+                        <App:emailField email="${flash?.user?.email}"/>
+                        <App:passwordField password="${flash?.user?.password}"/>
                         <div class="form-group">
                             <g:submitButton type="submit" class="btn btn-lg btn-primary btn-block" value="Login"
                                             name="submit"/>

@@ -31,9 +31,9 @@
                 aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <ul class="navbar-nav mr-5">
-            <App:adminMenues/>
-        </ul>
+        %{--<ul class="navbar-nav mr-5">--}%
+            %{--<App:adminMenues/>--}%
+        %{--</ul>--}%
         <ul class="navbar-nav ml-auto">
             <App:menuOnAuthenticationState/>
         </ul>

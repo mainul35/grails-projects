@@ -5,6 +5,7 @@ import grails.web.servlet.mvc.GrailsParameterMap
 
 @Transactional
 class CourseService {
+    GlobalConfigService globalConfigService
 
     def createCourse(Course course) {
         if (course.save()) {
@@ -56,5 +57,19 @@ class CourseService {
             courses.add(getCourse(id))
         }
         return courses
+    }
+
+    def list(GrailsParameterMap params) {
+        params.max = params.max ?: globalConfigService.itemsPerPage()
+        List<Course> courseList = Course.createCriteria().list(params) {
+            if (params?.colName && params?.colValue) {
+                like(params.colName, "%" + params.colValue + "%")
+            }
+            if (!params.sort) {
+                order("id", "desc")
+            }
+//            eq("member", memberService.getCurrentMember())
+        }
+        return [list: courseList, count: Course.count()]
     }
 }

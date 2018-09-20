@@ -8,8 +8,9 @@
     <div class="card-body">
         <g:uploadForm controller="admin" action="update" enctype='multipart/form-data'>
             <g:hiddenField name="id" value="${user?.id}"></g:hiddenField>
-
-            <App:editProfile email="${user.email}" password="" user="${user}"/>
+            <App:editProfile user="${user}"/>
+            <App:emailField email="${user?.email}" id="email" spanId="email-error"/>
+            <App:renderErrorMessage fieldName="email" model="${user}" errorMessage="please.enter.first.name"/>
             <div class="form-group">
                 <input id="attachment" type="file" name="image" accept="image/*"/>
                 <span id="attachment-msg">Max file size is 5MB</span>
@@ -22,15 +23,7 @@
     </div>
 </div>
 <script type="text/javascript">
-    $('#attachment').bind('change', function () {
-        if(this.files[0].size > Math.ceil(5000000)){
-            $('#attachment-msg').css( 'color', 'red' );
-            $('#update-btn').prop( 'disabled', true );
-        }
-        else if(this.files[0].size < Math.ceil(5000000)){
-            $('#attachment-msg').css( 'color', 'white' );
-            $('#update-btn').prop( 'disabled', false );
-        }
-        $('#attachment-msg').text('This file size is: ' + Math.ceil(this.files[0].size / 1024) + " KB");
-    });
+    validateImage('#attachment', '#attachment-msg', '#update-btn')
+    validateEmail('#email', '#email-error', '#update-btn')
+
 </script>

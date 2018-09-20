@@ -1,5 +1,7 @@
 package grails.login.app
 
+import grails.converters.JSON
+
 class UserController {
 
     UserService userService
@@ -19,6 +21,12 @@ class UserController {
                 flash.message = flash.message
                 redirect(controller: "student", action: "dashboard")
                 return
+        }
+    }
+
+    def checkEmailInDb(){
+        if(params.email){
+            render userService.isDuplicate(params.email)?'200':'404'
         }
     }
 }

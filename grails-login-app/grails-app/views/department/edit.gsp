@@ -4,6 +4,11 @@
 <div class="card">
     <div class="card-header">
         Edit department
+        <span class="float-right">
+            <div class="btn-group">
+                <g:link action="all" controller="department" class="btn btn-success">All departments</g:link>
+            </div>
+        </span>
     </div>
 
     <div class="card-body">

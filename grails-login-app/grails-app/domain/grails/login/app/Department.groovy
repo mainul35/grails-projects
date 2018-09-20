@@ -6,7 +6,7 @@ class Department {
     String name
     static hasMany = [students: Student]
     static constraints = {
-        name shared: "nonEmpty"
+        name shared: "nonEmpty", unique: true
         students nullable: true
     }
 

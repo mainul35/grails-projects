@@ -6,7 +6,7 @@ import grails.web.servlet.mvc.GrailsParameterMap
 @Transactional
 class SemesterService {
     CourseService courseService
-
+    GlobalConfigService globalConfigService
     def createSemester(Semester semester) {
         if (semester.save(flush: true)) {
             return true
@@ -48,6 +48,10 @@ class SemesterService {
         return Semester.findById(id)
     }
 
+    def getSemester(String name){
+        return Semester.findByName(name)
+    }
+
     def getAll(){
         return Semester.findAll()
     }
@@ -64,4 +68,16 @@ class SemesterService {
         Semester.findById(id).students
     }
 
+    def list(GrailsParameterMap params) {
+        params.max = params.max ?: globalConfigService.itemsPerPage()
+        List<Semester> semesterList = Semester.createCriteria().list(params) {
+            if (params?.colName && params?.colValue) {
+                like(params.colName, "%" + params.colValue + "%")
+            }
+            if (!params.sort) {
+                order("id", "desc")
+            }
+        }
+        return [list: semesterList, count: Semester.count()]
+    }
 }

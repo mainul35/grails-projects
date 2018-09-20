@@ -9,6 +9,7 @@ class StudentService {
 
     SemesterService semesterService
     DepartmentService departmentService
+    GlobalConfigService globalConfigService
 
     def createStudent(Student student) {
         if (student.save()) {
@@ -57,4 +58,17 @@ class StudentService {
         return Student.findAll()
     }
 
+    def list(GrailsParameterMap params) {
+        params.max = params.max ?: globalConfigService.itemsPerPage()
+        List<Student> studentList = Student.createCriteria().list(params) {
+            if (params?.colName && params?.colValue) {
+                like(params.colName, "%" + params.colValue + "%")
+            }
+            if (!params.sort) {
+                order("id", "desc")
+            }
+//            eq("semester", semesterService.getSemester())
+        }
+        return [list: studentList, count: Course.count()]
+    }
 }

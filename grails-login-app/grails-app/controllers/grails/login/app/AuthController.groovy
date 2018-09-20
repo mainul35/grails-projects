@@ -20,6 +20,7 @@ class AuthController {
                 return
             } else {
                 flash.message = [info: 'Log in Failed!', success: false]
+                flash.user = [email: params.email, password: params.password]
             }
         }
     }

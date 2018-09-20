@@ -10,4 +10,8 @@ public class AppUtil {
     static def getAuthSession(){
         WebUtils.retrieveGrailsWebRequest().session
     }
+
+    static saveResponse(Boolean isSuccess, def model) {
+        return [isSuccess: isSuccess, model: model]
+    }
 }

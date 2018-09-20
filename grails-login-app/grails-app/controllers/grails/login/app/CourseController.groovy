@@ -107,4 +107,23 @@ class CourseController {
         redirect(controller: 'course', action: 'all')
         return
     }
+
+    def details() {
+        try {
+            def course = courseService.getCourse(Long.parseLong(params.id))
+            if(!course){
+                redirect(controller: 'auth', action: '404')
+                return
+            }
+            render(view: 'details', model: [course: course])
+        } catch (Exception e){
+            redirect(controller: 'auth', action: '404')
+
+        }
+    }
+
+    def find() {
+        def response = courseService.list(params)
+        render(view: 'all', model: [courses: response.list, total:response.count])
+    }
 }

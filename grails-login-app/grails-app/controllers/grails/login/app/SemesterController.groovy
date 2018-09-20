@@ -78,7 +78,7 @@ class SemesterController {
             status = false
             msg = 'Semester could not be deleted because it contains students.'
             flash.message = [info: msg, success: status]
-            redirect(controller: 'department', action: 'all')
+            redirect(controller: 'semester', action: 'all')
             return
         }
         returnedResult = semesterService.deleteSemester(id)
@@ -97,10 +97,23 @@ class SemesterController {
     def details() {
         try {
             def semester = semesterService.getSemester(Long.parseLong(params.id))
+            if(!semester){
+                redirect(controller: 'auth', action: '404')
+                return
+            }
             render(view: 'details', model: [semester: semester])
         } catch (Exception e){
             redirect(controller: 'auth', action: '404')
-
+            return
         }
+    }
+
+    def find() {
+        def response = semesterService.list(params)
+        render(view: 'all', model: [semesters: response.list, total:response.count])
+    }
+
+    def statistics(){
+
     }
 }

@@ -4,10 +4,30 @@
 <div class="card">
     <div class="card-header">
         Displaying all students
+        <App:authorized role="ROLE_ADMIN">
+            <span class="float-right">
+                <div class="btn-group">
+                    <g:form controller="student" action="find" method="GET">
+                        <div class="input-group" id="search-area">
+                            <g:select name="colName" class="form-control" from="[name: 'Student name', email: 'Student email']"
+                                      value="${params?.colName}" optionKey="key" optionValue="value"/>
+                            <g:textField name="colValue" class="form-control" value="${params?.colValue}"/>
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="submit">Search</button>
+                            </span>
+                        </div>
+                    </g:form>
+                </div>
+                <div class="btn-group">
+                    <g:link action="register-student" controller="admin"
+                            class="btn btn-success">Create student</g:link>
+                </div>
+            </span>
+        </App:authorized>
     </div>
 
     <div class="card-body">
-        <table class="table">
+        <table class="table table-bordered">
             <thead class="table-dark">
             <tr>
                 <th>Student name</th>
@@ -38,9 +58,11 @@
                                 action="details" params="[id: student.semester.id]">${student.semester.name}</g:link></td>
                     <td>
                         <div class="btn-group">
+                            <g:link type="button" class="btn btn-success" controller="student"
+                                    action="profile" params="[id: student.id]"><span class="fa fa-eye fa-lg"></span></g:link>
                             <g:link type="button" class="btn btn-primary" controller="student"
                                     action="edit" params="[id: student.id]"><span class="fa fa-pencil fa-lg"></span></g:link>
-                            <g:link type="button" class="btn btn-danger" controller="student"
+                            <g:link type="button" class="btn btn-danger delete-confirmation" controller="student"
                                     action="delete" params="[id: student.id]"><span class="fa fa-remove fa-lg"></span></g:link>
                         </div>
                     </td>

@@ -121,22 +121,32 @@ class StudentController {
 
     def profile() {
 
-        def id = params?.id ?Long.parseLong(params?.id):
-                flash.id?Long.parseLong(flash.id):
-                        authService.authentication.user.id
-        if(authService.authentication.user.role.equals('ROLE_STUDENT')){
-            if (!studentService.getStudent(id) ||
-                    !id.toString().equals(authService.authentication.user.id.toString())) {
-                redirect(controller: 'auth', action: '403')
-                return
+        try {
+            def id = params?.id ?Long.parseLong(params?.id):
+                    flash.id?Long.parseLong(flash.id):
+                            authService.authentication.user.id
+            if(authService.authentication.user.role.equals('ROLE_STUDENT')){
+                if (!studentService.getStudent(id) ||
+                        !id.toString().equals(authService.authentication.user.id.toString())) {
+                    redirect(controller: 'auth', action: '403')
+                    return
+                }
             }
-        }
 
-        def student = studentService.getStudent(id)
-        if (student) {
-            render(view: 'view-profile', model: [student: student])
-        } else {
+            def student = studentService.getStudent(id)
+            if (student) {
+                render(view: 'view-profile', model: [student: student])
+            } else {
+                redirect(controller: 'auth', action: '404')
+            }
+
+        }catch (Exception e){
             redirect(controller: 'auth', action: '404')
         }
+    }
+
+    def find() {
+        def response = studentService.list(params)
+        render(view: 'all', model: [students: response.list, total:response.count])
     }
 }
