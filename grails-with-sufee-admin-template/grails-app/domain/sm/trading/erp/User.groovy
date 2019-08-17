@@ -22,7 +22,7 @@ class User implements UserDetails{
     boolean accountExpired = false
     boolean accountLocked = false
     boolean passwordExpired = false
-    static hasMany = [roles: Role]
+    List<Role> roles
     static constraints = {
         firstName nullable: false, blank: false
         lastName nullable: true, blank: true

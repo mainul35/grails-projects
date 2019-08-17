@@ -38,42 +38,109 @@ class AdminController {
         [roles: Role.findAll()]
     }
 
-    def 'add-user'() {
-        def created = false
+    def "add-user" () {
+        render(view: "/admin/add-user", model: [status: '', msg: ''])
+    }
+
+    def 'save'() {
+        def saved = false
         def roles = Role.findAll()
         log.info 'in /admin/add-user action call: {}', params
-        User user = params
-        user.roles = roleService.getRolesMatchingWithIds(params.roles)
-        user.id = System.currentTimeMillis()
-        if (user.validate()) {
+
+        User user = new User()
+        String status = "create"
+        String message = ""
+        String code = ""
+
+        if (params.id) {
+            user = User.findById(params.id)
+            status = "update"
+        }
+
+        if (params.firstName) {
+            user.firstName = params.firstName
+        }
+
+        if (params.lastName) {
+            user.lastName = params.lastName
+        }
+
+        if (params.email) {
+            user.email = params.email
+        }
+
+        if (params.password) {
+            user.password = params.password
+        }
+
+        if (params.contact) {
+            user.contact = params.contact
+        }
+
+        if (params.position) {
+            user.position = params.position
+        }
+
+        if (params.address) {
+            user.address = params.address
+        }
+
+        if (params.joiningDate) {
+            user.joiningDate = params.joiningDate
+        }
+
+        Role role = roleService.getRoleMatchingWithName("ROLE_USER")
+        if (!role) {
+            role = new Role()
+            role.setAuthority("USER")
+            roleService.createRole(role)
+        }
+        user.roles = new ArrayList<Role>()
+        user.roles.add(role)
+
+        def fileName = uploadService.uploadFile(request.getFile('file'), user.id)
+        if (fileName) {
+            user.profileImage = fileName
+        }
+
+        if (status == "create") {
             user.username = user.email.split('@')[0]
             log.info '{}', user
-            def fileName = uploadService.uploadFile(request.getFile('file'), user.id)
-            if (fileName) {
-                user.profileImage = fileName
+            if (userService.save(user)) {
+                saved = true
             }
-            if (userService.createUser(user)) {
-                created = true
-            }
-            if (created) {
-                render(view: '/admin/add-user', model: [status: message(code: 'alert.status.success', default: ''), msg: 'Created successfully!', roles: roles])
-                return
+            if (saved) {
+                message = "Created Successfully!"
+                code = 'alert.status.success'
             } else {
-                render(view: '/admin/add-user', model: [status: message(code: 'alert.status.danger', default: ''), msg: 'Creation failed!', roles: roles])
-                return
+                message = "Failed to Create!"
+                code = 'alert.status.danger'
             }
-        } else if (user && (user.email == null || user.password == null || user.contact == null || user.firstName == null || user.lastName == null || user.roles == null || user.address != null)) {
-            log.debug 'some fields are missing'
-            render(view: '/admin/add-user', model: [status: message(code: 'alert.status.warning', default: ''), msg: 'Could not create!', user: user])
+            render(view: '/admin/add-user', model: [status: g.message(code: code, default: ''), msg: message, roles: roles])
             return
         } else {
-            render(view: '/admin/add-user', model: [status: '', msg: '', roles: roles])
+            if (userService.save(user)) {
+                saved = true
+            }
+
+            if (saved) {
+                message = "Updated Successfully!"
+                code = 'alert.status.success'
+            }
+            else {
+                message = "Failed to Update!"
+                code = 'alert.status.danger'
+            }
+            render(view: '/admin/add-user', model: [status: g.message(code: code, default: ''), msg: message, user: user])
             return
         }
     }
 
-    def 'edit-profile'(){
+    def 'edit'(){
+        User user = User.findById(params.id)
+        render(view: "edit-user", model: [user: user])
     }
+
     def 'view-users'() {
         def users = User.findAll()
 //        int page = Integer.parseInt(params.page ?: '0')

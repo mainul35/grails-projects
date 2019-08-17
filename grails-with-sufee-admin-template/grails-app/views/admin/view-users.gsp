@@ -18,7 +18,7 @@
             <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <h1>Role Management panel</h1>
+                        <h1>User Management panel</h1>
                     </div>
                 </div>
             </div>
@@ -27,7 +27,7 @@
                 <div class="page-header float-right">
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
-                            <li class="active">View Roles</li>
+                            <li class="active">View Users</li>
                         </ol>
                     </div>
                 </div>
@@ -62,7 +62,7 @@
                             <div class="col-sm-12 col-md-6">
                                 <div id="bootstrap-data-table_filter" class="dataTables_filter">
                                     <label>Search:<input type="search" id="search" class="form-control form-control-sm"
-                                        placeholder="Search" onkeyup="return searchUser(this.id)"
+                                        placeholder="Search" onblur="return searchUser(this.id)"
                                         aria-controls="bootstrap-data-table"/>
                                     </label>
                                 </div>

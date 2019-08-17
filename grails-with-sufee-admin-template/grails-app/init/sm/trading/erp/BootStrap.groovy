@@ -3,7 +3,7 @@ package sm.trading.erp
 class BootStrap {
 
     def init = { servletContext ->
-        Role role = new Role('ROLE_ADMIN')
+        Role role1 = new Role('ROLE_ADMIN')
         User user = new User('mainul35', 'secret')
 
         user.email = "mainuls18@gmail.com"
@@ -14,15 +14,16 @@ class BootStrap {
         user.address = 'Avijan 9/2, Academy Road, College Gate, Tongi, Gazipur'
         user.joiningDate = new Date()
 
-        user.roles = new HashSet<Role>()
-        user.roles.add(role)
-        for (def role1: user.roles){
-            role1.user = user
-        }
+        role1.save(flush: true, failOnError: true)
+        user.roles = new ArrayList<Role>()
+        user.roles.add(role1)
+//        for (def r: user.roles){
+//            r.user = user
+//        }
 //        User.exists(user)?:
         user.save(flush: true, failOnError: true)
 
-        log.info('role: {}', role.toString())
+        log.info('role1: {}', role1.toString())
         log.info('user: {}', user.toString())
     }
 

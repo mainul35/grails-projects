@@ -19,6 +19,7 @@
     <asset:stylesheet src="scss/style.css"/>
     <asset:stylesheet src="css/lib/vector-map/jqvmap.min.css"/>
     <asset:stylesheet src="css/lib/chosen/chosen.css"/>
+    <asset:stylesheet src="css/main.css"/>
 
     <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.min.js"></script> -->
 

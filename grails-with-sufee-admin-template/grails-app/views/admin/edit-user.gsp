@@ -9,7 +9,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Add User</title>
+    <title>Edit User</title>
     <meta name="layout" content="admin"/>
 
 </head>
@@ -28,7 +28,7 @@
         <div class="page-header float-right">
             <div class="page-title">
                 <ol class="breadcrumb text-right">
-                    <li class="active">Add User</li>
+                    <li class="active">Edit User</li>
                 </ol>
             </div>
         </div>
@@ -42,9 +42,10 @@
     <g:uploadForm controller="admin" action="save" method="post" enctype='multipart/form-data'>
         <div class="col-lg-12">
             <div class="card">
-                <div class="card-header"><strong>Add User&nbsp;</strong><small>Form</small></div>
+                <div class="card-header"><strong>Edit User&nbsp;</strong><small>Form</small></div>
 
                 <div class="card-body card-block">
+                    <input type="hidden" name="id" value="${user.id}">
                     <appUser:nameField firstName="${user?.firstName}" lastName="${user?.lastName}"/>
                     <appUser:emailPasswordField email="${user?.email}" password="${user?.password}"/>
                     <appUser:contactField contact="${user?.contact}" />
@@ -55,13 +56,13 @@
                         <label for="joiningDate">Joining Date</label>
                         <g:datePicker type="date" class="form-control mr-sm-2" placeholder="Joining Date" name="joiningDate"
                                       id="joiningDate" value="${user?.joiningDate}"
-                                      precision="day" years="${2000..2050}"/>
+                                      precision="day" years="${1980..2050}"/>
                     </div>
 
                     <app:fileField/>
 
                     <div class="form-group">
-                        <input type="submit" class="btn btn-primary" value="Create User"/>
+                        <input type="submit" class="btn btn-primary" value="Update User"/>
                     </div>
                 </div>
             </div>

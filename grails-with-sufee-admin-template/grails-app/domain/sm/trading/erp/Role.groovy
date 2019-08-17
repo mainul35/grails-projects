@@ -7,14 +7,14 @@ import org.springframework.security.core.GrantedAuthority
 class Role implements GrantedAuthority{
 
     String authority
-    static belongsTo = [user: User]
+//    static belongsTo = [user: User]
     static mapping = {
         version false
-        user(cascade: 'all-delete-orphan')
+//        user(cascade: 'all-delete-orphan')
     }
     static constraints = {
         authority unique: true, nullable: false
-        user nullable: true
+//        user nullable: true
     }
 
     Role(String authority) {

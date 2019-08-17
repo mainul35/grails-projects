@@ -21,11 +21,11 @@ public class CustomAuthentication implements Authentication {
         user.username = 'anonymous'
         Role role = new Role()
         role.setAuthority('ROLE_ANONYMOUS')
-        user.roles = new HashSet<Role>()
+        user.roles = new ArrayList<Role>()
         user.roles.add(role)
-        for (def role1: user.roles){
-            role1.user = user
-        }
+//        for (def role1: user.roles){
+//            role1.user = user
+//        }
         user.setEnabled(false)
     }
 

@@ -42,9 +42,11 @@ class UploadService {
             fileName = System.currentTimeMillis() + '.' + extension
             dir = (realPath + systemPath + fileName)
 
-            upload(file, dir)
-            file = systemPath + fileName
-            return file
+            boolean isUploaded = upload(file, dir)
+            if (isUploaded) {
+                file = systemPath + fileName
+                return file
+            }
         }
         return null
     }

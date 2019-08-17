@@ -6,7 +6,9 @@ class AppTagLib {
     //static encodeAsForTags = [tagName: [taglib:'html'], otherTagName: [taglib:'none']]
 
     def alert = { attr, body ->
-        out << g.render(template: '/templates/alert', model: [msg: attr.msg, status: attr.status])
+        if (attr.status && attr.msg) {
+            out << g.render(template: '/templates/alert', model: [msg: attr.msg, status: attr.status])
+        }
     }
 
     def fileField = { attr, body ->

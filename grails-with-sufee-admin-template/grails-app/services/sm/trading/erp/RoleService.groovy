@@ -17,4 +17,9 @@ class RoleService {
         }
         return roles
     }
+
+    def getRoleMatchingWithName(String roleName){
+        Role r = Role.findByAuthority(roleName)
+        return r
+    }
 }

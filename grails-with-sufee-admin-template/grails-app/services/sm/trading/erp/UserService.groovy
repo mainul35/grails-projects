@@ -5,16 +5,12 @@ import grails.gorm.transactions.Transactional
 @Transactional
 class UserService {
 
-    def createUser(User user) {
+    def save(User user) {
         log.info 'in createUser method call: '
-        for (def role1: user.roles){
-            role1.user = user
-        }
-        if ((User.findByEmail(user.email) == null) && (User.findByUsername(user.username) == null)) {
-            user.save(failOnError: true, flush: true)
-        } else {
-            return false
-        }
+//        for (def role1: user.roles){
+//            role1.user = user
+//        }
+        user.save(flush: true, failOnError: true)
     }
 
     User getUserByUsername(String username) {

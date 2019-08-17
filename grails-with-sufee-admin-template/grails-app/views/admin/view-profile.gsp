@@ -19,7 +19,7 @@
     <g:if test="${user != null}">
 
         <div class="row">
-            <div class="col-3">
+            <div class="col-3 nav-left">
                 <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                     <a class="nav-link active" id="v-pills-basic-info-tab" data-toggle="pill" href="#v-pills-home" role="tab"
                        aria-controls="v-pills-home" aria-selected="true">Basic info</a>
@@ -30,7 +30,7 @@
                 </div>
             </div>
 
-            <div class="col-9">
+            <div class="col-8">
                 <div class="tab-content" id="v-pills-tabContent">
                     <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
                          aria-labelledby="v-pills-home-tab">
@@ -117,6 +117,9 @@
                     </div>
 
                 </div>
+            </div>
+            <div class="col-1">
+                <a href="/admin/edit?id=${user.id}"><i class="fa fa-edit"></i></a>
             </div>
         </div>
     </g:if>
