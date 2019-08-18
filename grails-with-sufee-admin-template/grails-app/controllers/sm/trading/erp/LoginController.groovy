@@ -41,9 +41,11 @@ class LoginController {
                     redirect(controller: 'admin', action: 'dashboard')
                     return
                 }else {
-                    render 'you have been logged in but no page has been found \n\
+
+                    redirect(controller: 'user', action: 'newsfeed')
+/*                    render 'you have been logged in but no page has been found \n\
                             for you. Please contact Admin with your registered \n\
-                            email address mentioning the issue.'
+                            email address mentioning the issue.'*/
                 }
             }
         } else {

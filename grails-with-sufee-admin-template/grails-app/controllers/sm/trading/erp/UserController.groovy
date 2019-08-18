@@ -1,9 +1,12 @@
 package sm.trading.erp
 
+import grails.plugin.springsecurity.annotation.Secured
+
 class UserController {
 
-    def 'create-user'() {
-        respond (view: '/user/create-user')
+    @Secured("ROLE_USER")
+    def 'newsfeed'() {
+        respond (view: '/user/newsfeed')
     }
 
     def 'profile'() {

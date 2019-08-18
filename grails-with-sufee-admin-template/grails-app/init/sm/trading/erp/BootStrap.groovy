@@ -14,14 +14,13 @@ class BootStrap {
         user.address = 'Avijan 9/2, Academy Road, College Gate, Tongi, Gazipur'
         user.joiningDate = new Date()
 
-        role1.save(flush: true, failOnError: true)
+        Role.findByAuthority(role1.authority) ?: role1.save(flush: true, failOnError: true)
         user.roles = new ArrayList<Role>()
         user.roles.add(role1)
 //        for (def r: user.roles){
 //            r.user = user
 //        }
-//        User.exists(user)?:
-        user.save(flush: true, failOnError: true)
+        User.findByUsername(user.username) ?: user.save(flush: true, failOnError: true)
 
         log.info('role1: {}', role1.toString())
         log.info('user: {}', user.toString())

@@ -6,26 +6,26 @@ class AppUserTagLib {
     //static encodeAsForTags = [tagName: [taglib:'html'], otherTagName: [taglib:'none']]
 
     def nameField = {attr, body ->
-        out << g.render(template: '/templates/user/name_form', model: [firstName: attr.firstName, lastName: attr.lastName])
+        out << g.render(template: '/templates/forms/name_form', model: [firstName: attr.firstName, lastName: attr.lastName])
     }
 
     def emailPasswordField = {attr, body->
-        out << g.render(template: '/templates/user/authentication_form', model: [email: attr.email, password: attr.password])
+        out << g.render(template: '/templates/forms/authentication_form', model: [email: attr.email, password: attr.password])
     }
 
     def contactField = {attr, body->
-        out << g.render(template: '/templates/user/contact_form', model: [contact: attr.contact])
+        out << g.render(template: '/templates/forms/contact_form', model: [contact: attr.contact])
     }
 
     def positionField = {attr, body->
-        out << g.render(template: '/templates/user/position_form', model: [position: attr.position])
+        out << g.render(template: '/templates/forms/position_form', model: [position: attr.position])
     }
 
     def addressField = {attr, body->
-        out << g.render(template: '/templates/user/address_form', model: [address: attr.address])
+        out << g.render(template: '/templates/forms/address_form', model: [address: attr.address])
     }
 
     def roleAssigningField = {attr, body->
-        out << g.render(template: '/templates/user/role_assigning_form', model: [roles: attr.roles, allRoles: Role.findAll()])
+        out << g.render(template: '/templates/forms/role_assigning_form', model: [roles: attr.roles, allRoles: Role.findAll()])
     }
 }
