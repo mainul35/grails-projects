@@ -1,3 +1,12 @@
 .nav-left {
     border-right: 1px solid #cccccc;
 }
+
+.news-divider {
+    border-bottom: 1px solid #cccccc;
+}
+
+.news-row {
+    border: 1px solid #cecece;
+    border-radius: 5px;
+}

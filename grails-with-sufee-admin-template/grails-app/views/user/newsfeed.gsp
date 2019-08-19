@@ -21,32 +21,15 @@
             </div>
             <div class="col-sm-10">
                 <div class="row">
+                    <div class="col-sm-12 text-left">
+                        <form>
+                            <textarea id="content"></textarea>
+                        </form>
 
-                    <div class="box">
-                        <div class="box-header">
-                            <h3 class="box-title">Bootstrap WYSIHTML5
-                                <small>Simple and fast</small>
-                            </h3>
-                            <!-- tools box -->
-                            <div class="pull-right box-tools">
-                                <button type="button" class="btn btn-default btn-sm" data-widget="collapse" data-toggle="tooltip"
-                                        title="Collapse">
-                                    <i class="fa fa-minus"></i></button>
-                                <button type="button" class="btn btn-default btn-sm" data-widget="remove" data-toggle="tooltip"
-                                        title="Remove">
-                                    <i class="fa fa-times"></i></button>
-                            </div>
-                            <!-- /. tools -->
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body pad">
-                            <form>
-                                <textarea class="textarea" placeholder="Place some text here"
-                                          style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
-                            </form>
-                        </div>
+                        <button type="button" style="width: 100%;" class="btn btn-primary">Submit</button>
                     </div>
                 </div>
+                <hr class="news-divider">
 
                 <div class="row">
                     <div class="col-sm-12">
@@ -131,11 +114,9 @@
     </div>
 </div>
 <script>
-    jQuery(function ($) {
-
-        //bootstrap WYSIHTML5 - text editor
-        $('.textarea').wysihtml5()
-    })
+    $R('#content', {
+        imageUpload: '/your-upload-script/'
+    });
 </script>
 </body>
 </html>

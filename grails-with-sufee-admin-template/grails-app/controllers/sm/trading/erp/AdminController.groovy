@@ -189,4 +189,38 @@ class AdminController {
         }
         render(collectedUsers as grails.converters.JSON ?: "{}")
     }
+
+    def "add-category" () {
+        render(view: '/admin/add-category')
+    }
+
+    def 'category-save' () {
+        Category category = new Category()
+        boolean saved = false
+
+        if (params.id) {
+            category = Category.findById(params.id)
+        }
+
+        if (params.categoryName) {
+            category.categoryName = params.categoryName
+        }
+
+        String message = ''
+        String status = ''
+        if (Category.findByCategoryName(params.categoryName)) {
+            saved = false
+            message = 'A category with this name already exists'
+            status = 'alert.status.danger'
+
+        } else {
+            saved = category.save(failOnError: true) ? true : false
+            if (saved) {
+                message = 'Category creation successful'
+                status = 'alert.status.success'
+            }
+
+        }
+        render(view: '/admin/add-category', model: [msg: message, status: g.message(code: status, default: '')])
+    }
 }

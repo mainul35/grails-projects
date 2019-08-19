@@ -14,12 +14,19 @@
                 <li class="active">
                     <a href="/admin/dashboard"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
                 </li>
-                <h3 class="menu-title">User Management</h3><!-- /.menu-title -->
+%{--                <h3 class="menu-title">User Management</h3><!-- /.menu-title -->--}%
                 <li class="menu-item-has-children dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-users"></i>Manage Users</a>
                     <ul class="sub-menu children dropdown-menu">
                         <li><i class="fa fa-plus-square"></i><a href="/admin/add-user">Add User</a></li>
                         <li><i class="fa fa-file-word-o"></i><a href="/admin/view-users">View all Users</a></li>
+                    </ul>
+                </li>
+                <li class="menu-item-has-children dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-users"></i>Manage Post Categories</a>
+                    <ul class="sub-menu children dropdown-menu">
+                        <li><i class="fa fa-plus-square"></i><a href="/admin/add-category">Add Category</a></li>
+                        <li><i class="fa fa-file-word-o"></i><a href="/admin/category-list">View all Categories</a></li>
                     </ul>
                 </li>
             </ul>

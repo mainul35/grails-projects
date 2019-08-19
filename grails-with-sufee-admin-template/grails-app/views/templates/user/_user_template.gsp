@@ -139,8 +139,7 @@
 <asset:javascript src="js/main.js"/>
 <asset:javascript src="/libs/adminlte.min.js"/>
 <asset:javascript src="/libs/demo.js"/>
-<asset:javascript src="/libs/ckeditor.js"/>
-<asset:javascript src="/libs/bootstrap3-wysihtml5.all.min.js"/>
+<asset:javascript src="/libs/redactor3.js"/>
 
 <g:layoutBody/>
 </div>
