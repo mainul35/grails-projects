@@ -15,7 +15,9 @@ class UserController {
         render(view: '/user/newsfeed', model: [categoryItems: categories])
     }
 
-    def 'profile'() {
+    def 'news-post'() {
+        println params
+
         respond (view: '/user/profile')
     }
 
