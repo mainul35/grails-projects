@@ -140,6 +140,8 @@
 <asset:javascript src="/libs/adminlte.min.js"/>
 <asset:javascript src="/libs/demo.js"/>
 <asset:javascript src="/libs/redactor3.js"/>
+<asset:javascript src="/js/lib/data-table/jquery.dataTables.min.js"/>
+<asset:javascript src="/js/lib/data-table/dataTables.bootstrap.min.js"/>
 
 <g:layoutBody/>
 </div>

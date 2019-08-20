@@ -17,16 +17,42 @@
     <div class="col-sm-10">
         <div class="row">
             <div class="col-sm-2">
-                <h6>Categories here</h6>
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Categories</h3>
+                    </div>
+                    <div class="box-body">
+                        <g:each var="item" in="${categoryItems}">
+                            <button type="button" class="btn btn-default btn-block btn-sm pick-a-category-item" data-id="${item.id}">${item.categoryName}</button>
+                        </g:each>
+                    </div>
+                </div>
             </div>
             <div class="col-sm-10">
                 <div class="row">
-                    <div class="col-sm-12 text-left">
-                        <form>
-                            <textarea id="content"></textarea>
-                        </form>
-
-                        <button type="button" style="width: 100%;" class="btn btn-primary">Submit</button>
+                    <div class="col-sm-12 text-left form-control">
+                        <textarea id="content"></textarea>
+                    </div>
+                    <div class="col-sm-12 form-control">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <g:select
+                                            id="category"
+                                            data-placeholder="Select category..."
+                                            class="standardSelect"
+                                            name="category"
+                                            from="${categoryItems}"
+                                            optionKey="id"
+                                            value="" optionValue="${{ it.categoryName }}"
+                                            noSelection="${['null': '']}">
+                                    </g:select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <button type="button" style="width: 100%;" class="btn btn-block btn-sm btn-primary submit-news">Submit</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <hr class="news-divider">
@@ -113,10 +139,19 @@
         </div>
     </div>
 </div>
+<script src="/assets/js/lib/chosen/chosen.jquery.min.js"></script>
 <script>
     $R('#content', {
         imageUpload: '/your-upload-script/'
     });
+    jQuery(document).ready(function ($) {
+        $(".standardSelect").chosen({
+            disable_search_threshold: 10,
+            no_results_text: "Oops, nothing found!",
+            width: "100%"
+        });
+    });
 </script>
+<script type="text/javascript" src="/assets/js/newsfeed.js"></script>
 </body>
 </html>

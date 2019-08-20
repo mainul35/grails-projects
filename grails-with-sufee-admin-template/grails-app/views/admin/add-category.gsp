@@ -38,7 +38,7 @@
 
     <app:alert msg="${msg}" status="${status}"/>
 
-    <g:form action="/admin/category-save" method="post">
+    <form action="/admin/category-save" method="post">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header"><strong>Add Category&nbsp;</strong><small>Form</small></div>
@@ -53,7 +53,7 @@
                 </div>
             </div>
         </div>
-    </g:form>
+    </form>
 </div> <!-- .content -->
 
 </body>

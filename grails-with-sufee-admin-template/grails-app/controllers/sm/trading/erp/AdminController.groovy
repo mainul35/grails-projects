@@ -1,8 +1,8 @@
 package sm.trading.erp
 
-import org.springframework.beans.factory.annotation.Autowired
+import grails.orm.PagedResultList
+import org.grails.datastore.mapping.query.api.Criteria
 import org.springframework.security.access.annotation.Secured
-import org.springframework.web.bind.annotation.PathVariable
 
 @Secured('ROLE_ADMIN')
 class AdminController {
@@ -208,19 +208,31 @@ class AdminController {
 
         String message = ''
         String status = ''
+        String view = ''
         if (Category.findByCategoryName(params.categoryName)) {
             saved = false
             message = 'A category with this name already exists'
             status = 'alert.status.danger'
+            view = '/admin/add-category'
 
         } else {
             saved = category.save(failOnError: true) ? true : false
             if (saved) {
                 message = 'Category creation successful'
                 status = 'alert.status.success'
+                view = '/admin/view-categories'
             }
 
         }
-        render(view: '/admin/add-category', model: [msg: message, status: g.message(code: status, default: '')])
+        render(view: view, model: [msg: message, status: g.message(code: status, default: '')])
+    }
+
+    def 'category-list'() {
+        List<Category> categories = Category.findAll {
+            max: 10
+            offset: 10
+        }
+
+        render(view: '/admin/category-list', model: [items: categories])
     }
 }

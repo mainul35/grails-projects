@@ -6,7 +6,13 @@ class UserController {
 
     @Secured("ROLE_USER")
     def 'newsfeed'() {
-        respond (view: '/user/newsfeed')
+        List<Category> categories = Category.findAll {
+            max: 10
+            offset: 10
+        }
+
+
+        render(view: '/user/newsfeed', model: [categoryItems: categories])
     }
 
     def 'profile'() {
