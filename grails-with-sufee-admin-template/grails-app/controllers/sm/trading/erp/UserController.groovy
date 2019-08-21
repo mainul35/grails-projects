@@ -1,5 +1,6 @@
 package sm.trading.erp
 
+import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
 
 class UserController {
@@ -15,10 +16,28 @@ class UserController {
         render(view: '/user/newsfeed', model: [categoryItems: categories])
     }
 
+    @Secured("ROLE_USER")
     def 'news-post'() {
-        println params
+        News news = new News()
+        boolean saved = false
+        Map model = [status: 'error', message: 'Failed to save!']
 
-        respond (view: '/user/profile')
+        if (params.description) {
+            news.description = params.description
+            news.publishingTime = new Date()
+            saved = news.save(failOnError: true)
+        }
+
+        if (params.selectedCategoryId) {
+            Category category = Category.findById(params.toLong('selectedCategoryIds'))
+            if (saved) {
+                category.newsList.add(news)
+                category.save(failOnError: true)
+                model.status = 'success'
+                model.message = 'Saved Successfully.'
+            }
+        }
+        respond (model as JSON)
     }
 
     def 'edit'(User user) {

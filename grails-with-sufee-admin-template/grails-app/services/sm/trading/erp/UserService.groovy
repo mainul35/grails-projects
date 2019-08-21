@@ -5,6 +5,8 @@ import grails.gorm.transactions.Transactional
 @Transactional
 class UserService {
 
+    UploadService uploadService
+
     def save(User user) {
         log.info 'in createUser method call: '
 //        for (def role1: user.roles){

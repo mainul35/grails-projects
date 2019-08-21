@@ -1,5 +1,9 @@
 package sm.trading.erp
 
+import grails.core.GrailsApplication
+
+import javax.servlet.ServletContext
+
 class BootStrap {
 
     def init = { servletContext ->

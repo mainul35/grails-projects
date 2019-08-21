@@ -10,7 +10,7 @@ class News {
     static constraints = {
         description(nullable: false, blank: false)
         publishingTime nullable: false
-        category nullable: false
+        category nullable: true
     }
 
     static mapping = {

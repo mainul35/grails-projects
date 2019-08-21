@@ -74,7 +74,7 @@
                             <g:each var="user" in="${users}">
                                 <div class="card col-4" style="width:20rem;margin:20px 0 24px 0">
 
-                                    <img class="card-img-top" src="${resource(dir: 'images', file: user?.profileImage?:'/default.png')}"
+                                    <img class="card-img-top" src="${user?.profileImage? user.profileImage : resource(dir: 'images', file: '/default.png')}"
                                          alt="image" style="margin:1%"/>
 
                                          <div class="card-body">

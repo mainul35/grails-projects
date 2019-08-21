@@ -3,10 +3,15 @@ package sm.trading.erp
 import grails.core.GrailsApplication
 import grails.gorm.transactions.Transactional
 
+import javax.imageio.ImageIO
+import javax.servlet.ServletContext
+import java.awt.image.BufferedImage
+
 @Transactional
 class UploadService {
 
     GrailsApplication grailsApplication
+    ServletContext servletContext
 
     private def upload(def file, String name){
 
@@ -33,21 +38,32 @@ class UploadService {
         if (file) {
             fileNameSplittedArr = file.filename.split('\\.')
             String extension = fileNameSplittedArr[fileNameSplittedArr.length - 1]
-            String systemPath = '/students/' + userId + '/'
-            realPath = grailsApplication.config.uploadFolder
-            dir = new File(realPath + systemPath)
+            String filePath = '/students/' + userId + '/'
+            realPath = grailsApplication.config.uploadFolder = servletContext.getRealPath('')
+            dir = new File(realPath + filePath)
             if (!dir.exists()) {
                 dir.mkdirs()
             }
             fileName = System.currentTimeMillis() + '.' + extension
-            dir = (realPath + systemPath + fileName)
+            dir = (realPath + filePath + fileName)
 
             boolean isUploaded = upload(file, dir)
             if (isUploaded) {
-                file = systemPath + fileName
+                file = filePath + fileName
                 return file
             }
         }
         return null
+    }
+
+    def getFile(String filePath) {
+        try {
+            File file = new File(servletContext.getRealPath('') + filePath)
+            return file.bytes.encodeBase64().toString()
+        } catch (Exception e) {
+            e.printStackTrace()
+        } finally {
+            return ''
+        }
     }
 }

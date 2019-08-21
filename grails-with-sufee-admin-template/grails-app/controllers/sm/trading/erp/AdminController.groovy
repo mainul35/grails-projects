@@ -1,5 +1,6 @@
 package sm.trading.erp
 
+import grails.converters.JSON
 import grails.orm.PagedResultList
 import org.grails.datastore.mapping.query.api.Criteria
 import org.springframework.security.access.annotation.Secured
@@ -143,6 +144,13 @@ class AdminController {
 
     def 'view-users'() {
         def users = User.findAll()
+        for (User user in users) {
+            String base64Image = ''
+            if (user.getProfileImage()) {
+                base64Image = uploadService.getFile(user.getProfileImage())
+                user.setProfileImage('data:image/png;base64, ' + base64Image)
+            }
+        }
 //        int page = Integer.parseInt(params.page ?: '0')
 //        int offset = Integer.parseInt(params.offset ?: '10')
 //        def collectedUsers = new ArrayList<User>()
@@ -156,6 +164,12 @@ class AdminController {
 
     def 'view-profile'() {
         log.info 'in /admin/view-profile action call: {}'
+        User user = userService.getUserByUsername(params.username)
+        String base64Image = ''
+        if (user.profileImage) {
+            base64Image = uploadService.getFile(user.getProfileImage())
+            user.setProfileImage('data:image/png;base64, ' + base64Image)
+        }
         render(view: '/admin/view-profile', model: [user: userService.getUserByUsername(params.username)])
     }
 
@@ -182,6 +196,11 @@ class AdminController {
         println params.searchTerm
         for (User user : users) {
             if (user.firstName.contains(params.searchTerm) || user.lastName.contains(params.searchTerm) || user.email.contains(params.searchTerm)) {
+                String base64Image = ''
+                if (user.getProfileImage()) {
+                    base64Image = uploadService.getFile(user.getProfileImage())
+                    user.setProfileImage('data:image/png;base64, ' + base64Image)
+                }
                 collectedUsers.add(user)
             }else if(params.searchTerm.isEmpty()){
                 collectedUsers = users
@@ -235,4 +254,12 @@ class AdminController {
 
         render(view: '/admin/category-list', model: [items: categories])
     }
+
+//    def getFile() {
+//        String base64Image = ''
+//        if (params.fileName) {
+//            base64Image = uploadService.getFile(params.fileName)
+//        }
+//        render('data:image/png;base64, ' + base64Image)
+//    }
 }
