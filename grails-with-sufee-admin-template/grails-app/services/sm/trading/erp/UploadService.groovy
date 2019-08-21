@@ -11,7 +11,6 @@ import java.awt.image.BufferedImage
 class UploadService {
 
     GrailsApplication grailsApplication
-    ServletContext servletContext
 
     private def upload(def file, String name){
 
@@ -39,12 +38,12 @@ class UploadService {
             fileNameSplittedArr = file.filename.split('\\.')
             String extension = fileNameSplittedArr[fileNameSplittedArr.length - 1]
             String filePath = '/students/' + userId + '/'
-            realPath = grailsApplication.config.uploadFolder = servletContext.getRealPath('')
+            realPath = grailsApplication.config.uploadFolder = grailsApplication.mainContext.getResource('/WEB-INF/resources').file.getAbsolutePath()
             dir = new File(realPath + filePath)
             if (!dir.exists()) {
                 dir.mkdirs()
             }
-            fileName = System.currentTimeMillis() + '.' + extension
+            fileName = UUID.randomUUID().toString() + '.' + extension
             dir = (realPath + filePath + fileName)
 
             boolean isUploaded = upload(file, dir)
@@ -58,12 +57,11 @@ class UploadService {
 
     def getFile(String filePath) {
         try {
-            File file = new File(servletContext.getRealPath('') + filePath)
+            File file = new File(grailsApplication.mainContext.getResource('/WEB-INF/resources').file.getAbsolutePath() + filePath)
+
             return file.bytes.encodeBase64().toString()
         } catch (Exception e) {
             e.printStackTrace()
-        } finally {
-            return ''
         }
     }
 }

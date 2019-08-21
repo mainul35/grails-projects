@@ -47,7 +47,7 @@
                 <div class="card-body card-block">
                     <input type="hidden" name="id" value="${user.id}">
                     <appUser:nameField firstName="${user?.firstName}" lastName="${user?.lastName}"/>
-                    <appUser:emailPasswordField email="${user?.email}" password="${user?.password}"/>
+                    <appUser:emailPasswordField email="${user?.email}" password=""/>
                     <appUser:contactField contact="${user?.contact}" />
                     <appUser:addressField address="${user?.address}"/>
                     <appUser:positionField position="${user?.position}"/>

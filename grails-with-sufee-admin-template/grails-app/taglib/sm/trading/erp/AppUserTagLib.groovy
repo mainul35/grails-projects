@@ -10,7 +10,7 @@ class AppUserTagLib {
     }
 
     def emailPasswordField = {attr, body->
-        out << g.render(template: '/templates/forms/authentication_form', model: [email: attr.email, password: attr.password])
+        out << g.render(template: '/templates/forms/authentication_form', model: [email: attr.email ?: '', password: attr.password ?: ''])
     }
 
     def contactField = {attr, body->

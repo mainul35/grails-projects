@@ -19,6 +19,7 @@ var newsfeed = function () {
                     data: data,
                     success: function(resp) {
                         console.log(resp);
+                        window.location.href = '/user/newsfeed'
                     },
                     error: function (resp) {
                         console.log(resp)

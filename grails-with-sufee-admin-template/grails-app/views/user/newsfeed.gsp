@@ -58,81 +58,43 @@
                 <hr class="news-divider">
 
                 <div class="row">
-                    <div class="col-sm-12">
-                        <!-- Box Comment -->
-                        <div class="box box-widget">
-                            <div class="box-header with-border">
-                                <div class="user-block">
-                                    <img class="img-circle" src="${resource(dir: 'images', file: user?.profileImage?:'/default.png')}" alt="User Image">
-                                    <span class="username"><a href="#">Jonathan Burke Jr.</a></span>
-                                    <span class="description">Shared publicly - 7:30 PM Today</span>
-                                </div>
-                                <!-- /.user-block -->
-                                <div class="box-tools">
-                                    <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title="" data-original-title="Mark as read">
-                                        <i class="fa fa-circle-o"></i></button>
-                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                                </div>
-                                <!-- /.box-tools -->
-                            </div>
-                            <!-- /.box-header -->
-                            <div class="box-body" style="">
-                                <img class="img-responsive pad" src="${resource(dir: 'images', file: user?.profileImage?:'/user1-128x128.jpg')}" alt="Photo">
-
-                                <p>I took this photo this morning. What do you guys think?</p>
-                                <button type="button" class="btn btn-default btn-xs"><i class="fa fa-share"></i> Share</button>
-                                <button type="button" class="btn btn-default btn-xs"><i class="fa fa-thumbs-o-up"></i> Like</button>
-                                <span class="pull-right text-muted">127 likes - 3 comments</span>
-                            </div>
-                            <!-- /.box-body -->
-                            <div class="box-footer box-comments" style="">
-                                <div class="box-comment">
-                                    <!-- User image -->
-                                    <img class="img-circle img-sm" src="${resource(dir: 'images', file: user?.profileImage?:'/user1-128x128.jpg')}" alt="User Image">
-
-                                    <div class="comment-text">
-                                        <span class="username">
-                                            Maria Gonzales
-                                            <span class="text-muted pull-right">8:03 PM Today</span>
-                                        </span><!-- /.username -->
-                                    It is a long established fact that a reader will be distracted
-                                    by the readable content of a page when looking at its layout.
+                    <g:each var="news" in="${newsList}">
+                        <div class="col-sm-12">
+                            <!-- Box Comment -->
+                            <div class="box text-left box-widget">
+                                <div class="box-header with-border">
+                                    <div class="user-block">
+                                        <img class="img-responsive pad" src="${news.postedBy.profileImage ? news.postedBy.profileImage : '/assets/user1-128x128.jpg'}" alt="Photo">
+                                        <span class="username"><a href="">${news.postedBy.firstName + ' '+ news.postedBy.lastName}</a></span>
+                                        <span class="description">${news.publishingTime.toGMTString()}</span>
                                     </div>
-                                    <!-- /.comment-text -->
-                                </div>
-                                <!-- /.box-comment -->
-                                <div class="box-comment">
-                                    <!-- User image -->
-                                    <img class="img-circle img-sm" src="${resource(dir: 'images', file: user?.profileImage?:'/user1-128x128.jpg')}" alt="User Image">
+                                    <!-- /.user-block -->
 
-                                    <div class="comment-text">
-                                        <span class="username">
-                                            Luna Stark
-                                            <span class="text-muted pull-right">8:03 PM Today</span>
-                                        </span><!-- /.username -->
-                                    It is a long established fact that a reader will be distracted
-                                    by the readable content of a page when looking at its layout.
-                                    </div>
-                                    <!-- /.comment-text -->
+                                    <!-- /.box-tools -->
                                 </div>
-                                <!-- /.box-comment -->
+                                <!-- /.box-header -->
+                                <div class="box-body" style="">
+
+                                    <p>${news.description}</p>
+                                </div>
+                                <!-- /.box-body -->
+
+                                <!-- /.box-footer -->
+                                <div class="box-footer" style="">
+                                    <form action="#" method="post">
+                                        <img class="img-responsive img-circle img-sm" src="/assets/user1-128x128.jpg" alt="Alt Text">
+                                        <!-- .img-push is used to add margin to elements next to floating images -->
+                                        <div class="img-push">
+                                            <input type="text" class="form-control input-sm" placeholder="Press enter to post comment">
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- /.box-footer -->
                             </div>
-                            <!-- /.box-footer -->
-                            <div class="box-footer" style="">
-                                <form action="#" method="post">
-                                    <img class="img-responsive img-circle img-sm" src="${resource(dir: 'images', file: user?.profileImage?:'/user1-128x128.jpg')}" alt="Alt Text">
-                                    <!-- .img-push is used to add margin to elements next to floating images -->
-                                    <div class="img-push">
-                                        <input type="text" class="form-control input-sm" placeholder="Press enter to post comment">
-                                    </div>
-                                </form>
-                            </div>
-                            <!-- /.box-footer -->
+                            <!-- /.box -->
                         </div>
-                        <!-- /.box -->
-                    </div>
+                    </g:each>
+
                     <!-- /.col -->
                 </div>
             </div>

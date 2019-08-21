@@ -170,7 +170,7 @@ class AdminController {
             base64Image = uploadService.getFile(user.getProfileImage())
             user.setProfileImage('data:image/png;base64, ' + base64Image)
         }
-        render(view: '/admin/view-profile', model: [user: userService.getUserByUsername(params.username)])
+        render(view: '/admin/view-profile', model: [user: user])
     }
 
     def 'change-lock-status'() {
@@ -228,6 +228,7 @@ class AdminController {
         String message = ''
         String status = ''
         String view = ''
+        List<Category> categories = null
         if (Category.findByCategoryName(params.categoryName)) {
             saved = false
             message = 'A category with this name already exists'
@@ -239,11 +240,12 @@ class AdminController {
             if (saved) {
                 message = 'Category creation successful'
                 status = 'alert.status.success'
-                view = '/admin/view-categories'
+                view = '/admin/category-list'
+                categories = Category.findAll()
             }
 
         }
-        render(view: view, model: [msg: message, status: g.message(code: status, default: '')])
+        render(view: view, model: [msg: message, status: g.message(code: status, default: ''), items: categories])
     }
 
     def 'category-list'() {
@@ -255,11 +257,11 @@ class AdminController {
         render(view: '/admin/category-list', model: [items: categories])
     }
 
-//    def getFile() {
-//        String base64Image = ''
-//        if (params.fileName) {
-//            base64Image = uploadService.getFile(params.fileName)
-//        }
-//        render('data:image/png;base64, ' + base64Image)
-//    }
+    def getFile() {
+        String base64Image = ''
+        if (params.fileName) {
+            base64Image = uploadService.getFile(params.fileName)
+        }
+        render(['data:image/png;base64, ' + base64Image] as JSON)
+    }
 }

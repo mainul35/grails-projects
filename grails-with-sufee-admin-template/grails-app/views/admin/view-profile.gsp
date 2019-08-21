@@ -36,7 +36,7 @@
                          aria-labelledby="v-pills-home-tab">
                         <div class="row" style="margin-top: 1%;">
                             <div class="col-2">
-                                <img src="${resource(dir: 'images', file: 'default.png')}" alt="Profile picture"/>
+                                <img src="${user.profileImage ? user.profileImage : resource(dir: 'images', file: 'default.png')}" alt="Profile picture"/>
                             </div>
 
                             <div class="col-10">

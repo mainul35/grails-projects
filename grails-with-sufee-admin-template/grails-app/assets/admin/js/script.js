@@ -21,7 +21,7 @@ function searchUser(id) {
                     $('#cards').append(
                         '<div class="card col-4" style="width:20rem;margin:20px 0 24px 0">\n' +
                         '\n' +
-                        '                            <img class="card-img-top" src="/assets/default.png" alt="image" style="width:100%">\n' +
+                        '                            <img class="card-img-top" src="'+ (data[i].profileImage!=null ? data[i].profileImage : "/assets/default.png") + '" alt="image" style="width:100%">\n' +
                         '\n' +
                         '                            <div class="card-body">\n' +
                         '                                <a style="color: #007bff;" href="/admin/view-profile?username=mainul35">\n' +
@@ -33,36 +33,36 @@ function searchUser(id) {
                         '                                </p>\n' +
                         '                                \n' +
                         '                                \n' +
-                        '                                    <span id="accountLocked{{data[i].id}}"></span>\n' +
+                        '                                    <span id="accountLocked'+data[i].id+'"></span>\n' +
                         '                                \n' +
                         '                                \n' +
                         '                                \n' +
-                        '                                    <span id="accountExpired{{data[i].id}}"></span>\n' +
+                        '                                    <span id="accountExpired'+data[i].id+'"></span>\n' +
                         '                                \n' +
                         '                            </div>\n' +
                         '                        </div>'
                     )
 
                     if(data[i].accountLocked){
-                        $('#accountLocked{{data[i].id}}').append('<a href="/admin/change-lock-status?id='+data[i].id+'" class="btn btn-success">\n' +
+                        $('#accountLocked'+data[i].id+'').append('<a href="/admin/change-lock-status?id='+data[i].id+'" class="btn btn-success">\n' +
                             '                     <span class="fa fa-unlock"></span>&nbsp;Unlock\n' +
                             '                     </a>'
                         )
                     }
                     if(!data[i].accountLocked){
-                        $('#accountLocked{{data[i].id}}').append('<a href="/admin/change-lock-status?id='+data[i].id+'" class="btn btn-danger">\n' +
+                        $('#accountLocked'+data[i].id+'').append('<a href="/admin/change-lock-status?id='+data[i].id+'" class="btn btn-danger">\n' +
                             '                     <span class="fa fa-lock"></span>&nbsp;Lock\n' +
                             '                     </a>'
                         )
                     }
                     if(!data[i].accountExpired){
-                        $('#accountExpired{{data[i].id}}').append('<a href="/admin/change-expire-status?id='+data[i].id+'" class="btn btn-danger">\n' +
+                        $('#accountExpired'+data[i].id+'').append('<a href="/admin/change-expire-status?id='+data[i].id+'" class="btn btn-danger">\n' +
                             '                     <span class="fa fa-lock"></span>&nbsp;Expire Account\n' +
                             '                     </a>'
                         )
                     }
                     if(data[i].accountExpired){
-                        $('#accountExpired{{data[i].id}}').append('<p style="color: #9f191f;">Account Expired</p>')
+                        $('#accountExpired'+data[i].id+'').append('<p style="color: #9f191f;">Account Expired</p>')
                     }
                 }
             }
